@@ -4,9 +4,10 @@ import { Button } from "./ui/button";
 
 interface SelectGridProps {
   items: PrizeItem[];
+  handleSelection: (item: PrizeItem) => void;
 }
 
-const SelectGrid: React.FC<SelectGridProps> = ({ items }) => {
+const SelectGrid: React.FC<SelectGridProps> = ({ items, handleSelection }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 21; // Adjust as needed
@@ -27,9 +28,9 @@ const SelectGrid: React.FC<SelectGridProps> = ({ items }) => {
     setCurrentPage(0); // Reset to first page on new search
   };
 
-  const handleSelection = (item: PrizeItem) => {
-    console.log(item.name);
-  };
+  // const handleSelection = (item: PrizeItem) => {
+  //   console.log(item.name);
+  // };
 
   return (
     <div className="p-4">

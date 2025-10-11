@@ -154,3 +154,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* custom styles */
+.cursor-carrying {
+  cursor:
+    url("./assets/CarrySurvivor.png") 16 16,
+    auto;
+}
+
+.cursor-latched {
+  cursor:
+    url("./assets/LatchedOn.png") 2 2,
+    auto;
+}

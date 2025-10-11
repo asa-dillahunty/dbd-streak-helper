@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import StreakListPage from "./pages/StreakListPage";
 import StreakPage from "./pages/StreakPage";
 import Testing from "./pages/Testing";
+import HardCore from "./pages/HardCore";
 // import NewStreakPage from "./pages/NewStreakPage";
 
 const App: React.FC = () => {
@@ -11,6 +12,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<StreakListPage />} />
         <Route path="/streak/:id" element={<StreakPage />} />
+        <Route path="/hardcore/" element={<HardCore />} />
         {/* <Route path="/new" element={<NewStreakPage />} /> */}
         <Route path="/testing" element={<Testing />} />
       </Routes>
