@@ -10,11 +10,11 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<StreakListPage />} />
-        <Route path="/streak/:id" element={<StreakPage />} />
-        <Route path="/hardcore/" element={<HardCore />} />
+        <Route path="/dbd-streak-helper/" element={<StreakListPage />} />
+        <Route path="/dbd-streak-helper/streak/:id" element={<StreakPage />} />
+        <Route path="/dbd-streak-helper/hardcore/" element={<HardCore />} />
         {/* <Route path="/new" element={<NewStreakPage />} /> */}
-        <Route path="/testing" element={<Testing />} />
+        <Route path="/dbd-streak-helper/testing" element={<Testing />} />
       </Routes>
     </Router>
   );
