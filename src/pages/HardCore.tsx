@@ -1,7 +1,5 @@
 import {
-  DYING_URL,
   EXIT_URL,
-  HOOK_URL,
   OBSESSION_URL,
   SACRIFICED_URL,
   useGameData,
@@ -22,7 +20,13 @@ import {
 } from "@/components/ui/dialog";
 import usePersistedState from "@/lib/usePersistedState";
 import { cn } from "@/lib/utils";
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import {
@@ -31,32 +35,68 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { PrizeItem } from "@/components/PrizeWheel";
 
-const HCContext = createContext(null);
+interface HCSurvivor {
+  name: string;
+  iconURL: string;
+  perks?: (PrizeItem | undefined)[];
+  ownedBy?: PrizeItem | null;
+  killed?: boolean;
+  escapes?: number;
+}
+
+interface ContextValueType {
+  removeSurvivor: (survivor: HCSurvivor) => void;
+  updatePerk: (
+    survivor: HCSurvivor,
+    perkIndex: number,
+    perk: PrizeItem
+  ) => void;
+  updateEscapes: (survivor: HCSurvivor, escapes: number) => void;
+  setSurvivorOwner: (survivor: HCSurvivor, player: PrizeItem | null) => void;
+  killSurvivor: (survivor: HCSurvivor, isKilled: boolean) => void;
+  selectedPlayer: PrizeItem | null;
+  setSelectedPlayer: Dispatch<SetStateAction<PrizeItem | null>>;
+}
+
+const HCContext = createContext<ContextValueType | null>(null);
+
+export const useHCC = () => {
+  const context = useContext(HCContext);
+  if (!context) {
+    throw new Error("useHC must be used within an HCProvider");
+  }
+  return context;
+};
 
 export default function HardCore() {
   const { survivors: rawSurvivors } = useGameData();
 
-  const [survivors, setSurvivors] = usePersistedState(
+  const [survivors, setSurvivors] = usePersistedState<HCSurvivor[]>(
     "survivors",
     rawSurvivors
   );
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<PrizeItem | null>(null);
 
   const reset = () => {
     setSurvivors(rawSurvivors);
   };
 
-  const removeSurvivor = (survivor) => {
+  const removeSurvivor = (survivor: HCSurvivor) => {
     setSurvivors((prev) => prev.filter((surv) => surv !== survivor));
   };
 
-  const updatePerk = (survivor, perkIndex, perk) => {
+  const updatePerk = (
+    survivor: HCSurvivor,
+    perkIndex: number,
+    perk: PrizeItem
+  ) => {
     setSurvivors((prev) =>
       prev.map((surv) => {
         if (surv === survivor) {
           if (!surv.perks) {
-            surv.perks = [{}, {}, {}, {}];
+            surv.perks = [, , ,];
           }
           surv.perks[perkIndex] = perk;
           return surv;
@@ -66,7 +106,7 @@ export default function HardCore() {
     );
   };
 
-  const updateEscapes = (survivor, escapes) => {
+  const updateEscapes = (survivor: HCSurvivor, escapes: number) => {
     setSurvivors((prev) =>
       prev.map((surv) => {
         if (surv === survivor) {
@@ -78,7 +118,7 @@ export default function HardCore() {
     );
   };
 
-  const setSurvivorOwner = (survivor, player) => {
+  const setSurvivorOwner = (survivor: HCSurvivor, player: PrizeItem | null) => {
     setSurvivors((prev) =>
       prev.map((surv) => {
         if (surv === survivor) {
@@ -89,7 +129,7 @@ export default function HardCore() {
     );
   };
 
-  const killSurvivor = (survivor, isKilled) => {
+  const killSurvivor = (survivor: HCSurvivor, isKilled: boolean) => {
     setSurvivors((prev) =>
       prev.map((surv) => {
         if (surv === survivor) {
@@ -136,7 +176,7 @@ export default function HardCore() {
   );
 }
 
-function HCSurvivors({ survivors }) {
+function HCSurvivors({ survivors }: { survivors: HCSurvivor[] }) {
   return (
     <div className="flex flex-row pb-20 flex-wrap gap-2 justify-center">
       {survivors.map((survivor, index) => (
@@ -147,14 +187,14 @@ function HCSurvivors({ survivors }) {
   );
 }
 
-function SurvivorSmall({ survivor }) {
+function SurvivorSmall({ survivor }: { survivor: HCSurvivor }) {
   const {
     removeSurvivor,
     killSurvivor,
     setSurvivorOwner,
     selectedPlayer,
     updateEscapes,
-  } = useContext(HCContext);
+  } = useHCC();
 
   const incEscapes = () => {
     updateEscapes(survivor, (survivor.escapes || 0) + 1);
@@ -257,10 +297,16 @@ function SurvivorSmall({ survivor }) {
   );
 }
 
-function PerkDiamond({ perk, perkIndex, survivor }) {
+interface PerkDiamondPropTypes {
+  perk?: PrizeItem;
+  perkIndex: number;
+  survivor: HCSurvivor;
+}
+
+function PerkDiamond({ perk, perkIndex, survivor }: PerkDiamondPropTypes) {
   const [open, setOpen] = useState(false);
   const { survivorPerks } = useGameData();
-  const { updatePerk } = useContext(HCContext);
+  const { updatePerk } = useHCC();
   return (
     <Dialog open={open}>
       <DialogTrigger
@@ -316,7 +362,7 @@ function PerkDiamond({ perk, perkIndex, survivor }) {
 
 function Players() {
   const [open, setOpen] = useState(false);
-  const { setSelectedPlayer } = useContext(HCContext);
+  const { setSelectedPlayer } = useHCC();
 
   const players = [
     {
@@ -364,8 +410,8 @@ function Players() {
   }
 }
 
-function PlayerSmall({ player }) {
-  const { selectedPlayer, setSelectedPlayer } = useContext(HCContext);
+function PlayerSmall({ player }: { player: PrizeItem }) {
+  const { selectedPlayer, setSelectedPlayer } = useHCC();
   return (
     <div
       onClick={(e) => {

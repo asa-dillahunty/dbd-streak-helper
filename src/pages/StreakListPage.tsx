@@ -32,7 +32,7 @@ const StreakListPage: React.FC = () => {
       <h1 className="text-3xl font-bold mb-4">My Streaks</h1>
       <div className="mb-4">
         <Link
-          to="/new"
+          to="./new"
           className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
         >
           Start a New Streak
@@ -47,7 +47,7 @@ const StreakListPage: React.FC = () => {
               key={streak.id}
               className="border p-4 rounded hover:bg-gray-100 transition-colors"
             >
-              <Link to={`/streak/${streak.id}`}>
+              <Link to={`./streak/${streak.id}`}>
                 <div className="flex justify-between items-center">
                   <div>
                     <h2 className="text-xl font-semibold">{streak.title}</h2>
