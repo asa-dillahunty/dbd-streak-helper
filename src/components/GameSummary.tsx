@@ -1,18 +1,8 @@
 import { FaArrowRight } from "react-icons/fa";
 // Predefined list of killers with icons
 
-import killers from "../assets/killers.json";
-import killerPerks from "../assets/killer_perks.json";
 import { Game } from "@/lib/customTypes";
-
-for (const killer of killers) {
-  killer.iconURL = killer.iconURL.split(".png")[0] + ".png";
-  killer.name = killer.killerName;
-  // killer.name = killer.name.replace("&amp;", "&");
-}
-for (const perk of killerPerks) {
-  perk.iconURL = perk.iconURL.split(".png")[0] + ".png";
-}
+import { useGameData } from "@/assets/gameData";
 
 interface GameSummaryProps {
   game: Game;
@@ -20,7 +10,8 @@ interface GameSummaryProps {
 
 const GameSummary: React.FC<GameSummaryProps> = ({ game }) => {
   // Find the killer's icon from the predefined list
-  const killerData = killers.find((k) => k.killerName === game.killer.name);
+  const { killers, killerPerks } = useGameData();
+  const killerData = killers.find((k) => k.name === game.killer.name);
   const killerIcon = killerData ? killerData.iconURL : "/icons/default.png";
 
   // Ensure exactly 4 perks (fill empty slots if needed)

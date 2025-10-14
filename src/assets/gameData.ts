@@ -10,22 +10,19 @@ export function useGameData() {
   const survivorPerks = rawSurvivorPerks;
 
   for (const killer of killers) {
-    killer.iconURL = killer.iconURL.split(".png")[0] + ".png";
-    killer.name = killer.killerName;
-    // killer.name = killer.name.replace("&amp;", "&");
+    killer.iconURL = killer.iconUrl;
   }
 
   for (const s of survivors) {
-    s.iconURL = s.iconURL.split(".png")[0] + ".png";
-    s.name = s.name.replace("&amp;", "&");
+    s.iconURL = s.iconUrl;
   }
 
   for (const perk of killerPerks) {
-    perk.iconURL = perk.iconURL.split(".png")[0] + ".png";
+    perk.iconURL = perk.iconUrl;
   }
 
   for (const perk of survivorPerks) {
-    perk.iconURL = perk.iconURL.split(".png")[0] + ".png";
+    perk.iconURL = perk.iconUrl;
   }
 
   return { killers, survivors, killerPerks, survivorPerks };
