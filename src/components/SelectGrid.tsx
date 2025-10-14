@@ -37,6 +37,7 @@ const SelectGrid: React.FC<SelectGridProps> = ({ items, handleSelection }) => {
       {/* Search bar */}
       <div className="mb-4">
         <input
+          autoFocus
           type="text"
           placeholder="Search by name..."
           value={searchQuery}
