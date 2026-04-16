@@ -96,8 +96,8 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/S24_ElodieRakoto_Portrait.png"
   },
   {
-    "name": "Yun-Jin Lee",
-    "iconUrl": "https://deadbydaylight.wiki.gg/images/S25_Yun-JinLee_Portrait.png"
+    "name": "Lee Yun-jin",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/S25_LeeYun-jin_Portrait.png"
   },
   {
     "name": "Jill Valentine",
@@ -194,5 +194,17 @@
   {
     "name": "Vee Boonyasak",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/S49_VeeBoonyasak_Portrait.png"
+  },
+  {
+    "name": "Dustin Henderson",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/S50_DustinHenderson_Portrait.png"
+  },
+  {
+    "name": "Eleven",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/S51_Eleven_Portrait.png"
+  },
+  {
+    "name": "Kwon Tae-young",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/S52_KwonTae-young_Portrait.png"
   }
 ]

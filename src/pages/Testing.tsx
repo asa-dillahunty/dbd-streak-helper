@@ -7,13 +7,13 @@ import PrizeWheel, { PrizeItem } from "@/components/PrizeWheel";
 import { Button } from "@/components/ui/button";
 import { useGameData } from "@/assets/gameData";
 import HardCore from "./HardCore";
-import PipTracker from "@/components/PipTracker";
+// import PipTracker from "@/components/PipTracker";
 
 const Testing: React.FC = () => {
   const { killers, killerPerks } = useGameData();
   const [killerList, setKillerList] = useState(killers);
   const [selectedKiller, setSelectedKiller] = useState<PrizeItem>(
-    killerList[0]
+    killerList[0],
   );
 
   return (
@@ -22,7 +22,7 @@ const Testing: React.FC = () => {
       {/* <HardCore /> */}
       <h1 className="text-2xl font-bold mb-4">Here</h1>
       <SelectGrid items={killerPerks} />
-      <PipTracker />
+      {/* <PipTracker /> */}
       {/* <LootBoxSelector items={killerPerks} /> */}
 
       <PrizeWheel
@@ -33,7 +33,7 @@ const Testing: React.FC = () => {
       <Button
         onClick={() =>
           setKillerList(
-            killerList.filter((killer) => killer.name !== selectedKiller.name)
+            killerList.filter((killer) => killer.name !== selectedKiller.name),
           )
         }
         className="mt-4"
@@ -45,7 +45,7 @@ const Testing: React.FC = () => {
           const randomKiller =
             killerList[Math.floor(killerList.length * Math.random())];
           setKillerList(
-            killerList.filter((killer) => killer.name !== randomKiller.name)
+            killerList.filter((killer) => killer.name !== randomKiller.name),
           );
         }}
         className="mt-4"

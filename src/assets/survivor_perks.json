@@ -1,5 +1,9 @@
 [
   {
+    "name": "A Place For Us",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_aPlaceForUs.png/96px-IconsPerks_aPlaceForUs.png"
+  },
+  {
     "name": "Ace in the Hole",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_aceInTheHole.png/96px-IconPerks_aceInTheHole.png"
   },
@@ -38,6 +42,10 @@
   {
     "name": "Background Player",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_backgroundPlayer.png/96px-IconPerks_backgroundPlayer.png"
+  },
+  {
+    "name": "Bada Bada Boom",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_BadaBadaBoom.png/96px-IconsPerks_BadaBadaBoom.png"
   },
   {
     "name": "Balanced Landing",
@@ -108,6 +116,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_botanyKnowledge.png/96px-IconPerks_botanyKnowledge.png"
   },
   {
+    "name": "Bound by Obsession",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_objectOfObsession.png/96px-IconPerks_objectOfObsession.png"
+  },
+  {
     "name": "Breakdown",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_breakdown.png/96px-IconPerks_breakdown.png"
   },
@@ -134,6 +146,10 @@
   {
     "name": "Champion of Light",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_championOfLight.png/96px-IconPerks_championOfLight.png"
+  },
+  {
+    "name": "Change of Plan",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_ChangeOfPlan.png/96px-IconsPerks_ChangeOfPlan.png"
   },
   {
     "name": "Chemical Trap",
@@ -220,6 +236,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_DoNoHarm.png/96px-T_UI_iconsPerks_DoNoHarm.png"
   },
   {
+    "name": "Down to the Last",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_soleSurvivor_noLicense.png/96px-IconPerks_soleSurvivor_noLicense.png"
+  },
+  {
     "name": "Dramaturgy",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_dramaturgy.png/96px-IconPerks_dramaturgy.png"
   },
@@ -234,6 +254,10 @@
   {
     "name": "Empathy",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_empathy.png/96px-IconPerks_empathy.png"
+  },
+  {
+    "name": "Extrasensory Perception",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_ExtrasensoryPerception.png/96px-IconsPerks_ExtrasensoryPerception.png"
   },
   {
     "name": "Exultation",
@@ -252,6 +276,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_finesse.png/96px-IconPerks_finesse.png"
   },
   {
+    "name": "Five Moves Ahead",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_FiveMovesAhead.png/96px-IconsPerks_FiveMovesAhead.png"
+  },
+  {
     "name": "Fixated",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_fixated.png/96px-IconPerks_fixated.png"
   },
@@ -262,6 +290,10 @@
   {
     "name": "Flip-Flop",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_flip-Flop.png/96px-IconPerks_flip-Flop.png"
+  },
+  {
+    "name": "Flow State",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_FlowState.png/96px-IconsPerks_FlowState.png"
   },
   {
     "name": "Fogwise",
@@ -572,8 +604,16 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_teamworkCollectiveStealth.png/96px-IconPerks_teamworkCollectiveStealth.png"
   },
   {
+    "name": "Teamwork: Full Circuit",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_TeamworkFullCircuit.png/96px-IconsPerks_TeamworkFullCircuit.png"
+  },
+  {
     "name": "Teamwork: Power of Two",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_teamworkPowerOfTwo.png/96px-IconPerks_teamworkPowerOfTwo.png"
+  },
+  {
+    "name": "Teamwork: Soft-Spoken",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_TeamworkSoftSpoken.png/96px-IconsPerks_TeamworkSoftSpoken.png"
   },
   {
     "name": "Teamwork: Throw Down",
@@ -624,6 +664,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_wakeUp.png/96px-IconPerks_wakeUp.png"
   },
   {
+    "name": "We See You",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_WeSeeYou.png/96px-IconsPerks_WeSeeYou.png"
+  },
+  {
     "name": "We'll Make It",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_wellMakeIt.png/96px-IconPerks_wellMakeIt.png"
   },
@@ -634,6 +678,10 @@
   {
     "name": "Wicked",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_wicked.png/96px-IconPerks_wicked.png"
+  },
+  {
+    "name": "Will to Live",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_decisiveStrike.png/96px-IconPerks_decisiveStrike.png"
   },
   {
     "name": "Windows of Opportunity",

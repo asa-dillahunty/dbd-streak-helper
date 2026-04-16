@@ -76,6 +76,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_cruelLimits.png/96px-IconPerks_cruelLimits.png"
   },
   {
+    "name": "Cull the Weak",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_dyingLight.png/96px-IconPerks_dyingLight.png"
+  },
+  {
     "name": "Dark Arrogance",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_darkArrogance.png/96px-IconPerks_darkArrogance.png"
   },
@@ -212,6 +216,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_hexHauntedGround.png/96px-IconPerks_hexHauntedGround.png"
   },
   {
+    "name": "Hex: Hive Mind",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_HexHiveMind.png/96px-IconsPerks_HexHiveMind.png"
+  },
+  {
     "name": "Hex: Huntress Lullaby",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_hexHuntressLullaby.png/96px-IconPerks_hexHuntressLullaby.png"
   },
@@ -298,6 +306,10 @@
   {
     "name": "Iron Maiden",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_ironMaiden.png/96px-IconPerks_ironMaiden.png"
+  },
+  {
+    "name": "Keep Them Waiting",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_saveTheBestForLast_noLicense.png/96px-IconPerks_saveTheBestForLast_noLicense.png"
   },
   {
     "name": "Knock Out",
@@ -444,6 +456,14 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_scourgeHookWeepingWounds.png/96px-IconPerks_scourgeHookWeepingWounds.png"
   },
   {
+    "name": "Secret Project",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_SecretProject.png/96px-IconsPerks_SecretProject.png"
+  },
+  {
+    "name": "See How They Run",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_playWithYourFood.png/96px-IconPerks_playWithYourFood.png"
+  },
+  {
     "name": "Septic Touch",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_septicTouch.png/96px-IconPerks_septicTouch.png"
   },
@@ -514,6 +534,10 @@
   {
     "name": "Trail of Torment",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_trailOfTorment.png/96px-IconPerks_trailOfTorment.png"
+  },
+  {
+    "name": "Turn Back the Clock",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconsPerks_TurnBackTheClock.png/96px-IconsPerks_TurnBackTheClock.png"
   },
   {
     "name": "Ultimate Weapon",
