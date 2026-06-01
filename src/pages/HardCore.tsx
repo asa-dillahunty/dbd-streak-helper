@@ -4,7 +4,7 @@ import {
   SACRIFICED_URL,
   useGameData,
 } from "@/assets/gameData";
-import TrapperVideo from "@/assets/the-trapper-dead-by-daylight.3840x2160.mp4";
+import TrapperVideo from "@/assets/the-trapper-dead-by-daylight.3840x2160-H.264.mp4";
 import HardcorePNG from "@/assets/hardcore.png";
 import SurvivorPNG from "@/assets/survivor.png";
 
@@ -51,7 +51,7 @@ interface ContextValueType {
   updatePerk: (
     survivor: HCSurvivor,
     perkIndex: number,
-    perk: PrizeItem
+    perk: PrizeItem,
   ) => void;
   updateEscapes: (survivor: HCSurvivor, escapes: number) => void;
   setSurvivorOwner: (survivor: HCSurvivor, player: PrizeItem | null) => void;
@@ -75,7 +75,7 @@ export default function HardCore() {
 
   const [survivors, setSurvivors] = usePersistedState<HCSurvivor[]>(
     "survivors",
-    rawSurvivors
+    rawSurvivors,
   );
   const [selectedPlayer, setSelectedPlayer] = useState<PrizeItem | null>(null);
 
@@ -90,7 +90,7 @@ export default function HardCore() {
   const updatePerk = (
     survivor: HCSurvivor,
     perkIndex: number,
-    perk: PrizeItem
+    perk: PrizeItem,
   ) => {
     setSurvivors((prev) =>
       prev.map((surv) => {
@@ -102,7 +102,7 @@ export default function HardCore() {
           return surv;
         }
         return surv;
-      })
+      }),
     );
   };
 
@@ -114,7 +114,7 @@ export default function HardCore() {
           return surv;
         }
         return surv;
-      })
+      }),
     );
   };
 
@@ -125,7 +125,7 @@ export default function HardCore() {
           surv.ownedBy = player;
         }
         return surv;
-      })
+      }),
     );
   };
 
@@ -136,7 +136,7 @@ export default function HardCore() {
           surv.killed = isKilled;
         }
         return surv;
-      })
+      }),
     );
   };
 
@@ -223,7 +223,7 @@ function SurvivorSmall({ survivor }: { survivor: HCSurvivor }) {
           alt={"hovering"}
           className={cn(
             "scale-175 object-center bg-black/50 duration-500 absolute z-0 opacity-0 group-hover:opacity-100",
-            survivor.killed ? "hidden" : ""
+            survivor.killed ? "hidden" : "",
           )}
         />
         <img
@@ -231,7 +231,7 @@ function SurvivorSmall({ survivor }: { survivor: HCSurvivor }) {
           alt={survivor.name}
           className={cn(
             "w-28 h-28 absolute top-0 bg-black/50 rounded-xs transition-colors duration-500 z-1",
-            selectedPlayer ? "cursor-latched" : "cursor-carrying"
+            selectedPlayer ? "cursor-latched" : "cursor-carrying",
           )}
           onClick={(e) => {
             if (selectedPlayer) {
@@ -283,7 +283,7 @@ function SurvivorSmall({ survivor }: { survivor: HCSurvivor }) {
       <div
         className={cn(
           "w-full h-full absolute top-0 right-0 bg-red-900/50 transition-opacity duration-500 opacity-100 z-10 rounded",
-          survivor.killed ? "" : "opacity-0 pointer-events-none"
+          survivor.killed ? "" : "opacity-0 pointer-events-none",
         )}
       >
         <img
@@ -426,7 +426,7 @@ function PlayerSmall({ player }: { player: PrizeItem }) {
         "flex flex-row justify-center items-center gap-2 bg-slate-800/80 hover:bg-slate-800 hover:cursor-pointer px-2 py-1 text-white rounded pointer-events-auto",
         selectedPlayer?.name === player.name
           ? "bg-blue-800/80 hover:bg-blue-800 "
-          : ""
+          : "",
       )}
     >
       <div>{player.name}</div>
