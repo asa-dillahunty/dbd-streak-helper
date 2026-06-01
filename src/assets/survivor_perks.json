@@ -180,6 +180,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_counterforce.png/96px-IconPerks_counterforce.png"
   },
   {
+    "name": "Cross-Examination",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_CrossExamination.png/96px-T_UI_iconsPerks_CrossExamination.png"
+  },
+  {
     "name": "Cut Loose",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_cutLoose.png/96px-IconPerks_cutLoose.png"
   },
@@ -362,6 +366,10 @@
   {
     "name": "Left Behind",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_leftBehind.png/96px-IconPerks_leftBehind.png"
+  },
+  {
+    "name": "Lend a Hand",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_LendaHand.png/96px-T_UI_iconsPerks_LendaHand.png"
   },
   {
     "name": "Light-Footed",
@@ -678,6 +686,10 @@
   {
     "name": "Wicked",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_wicked.png/96px-IconPerks_wicked.png"
+  },
+  {
+    "name": "Wide Open Throttle",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_WideOpenThrottle.png/96px-T_UI_iconsPerks_WideOpenThrottle.png"
   },
   {
     "name": "Will to Live",

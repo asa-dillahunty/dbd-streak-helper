@@ -252,6 +252,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_hexRuin.png/96px-IconPerks_hexRuin.png"
   },
   {
+    "name": "Hex: Scared to Death",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_ScaredToDeath.png/96px-T_UI_iconsPerks_ScaredToDeath.png"
+  },
+  {
     "name": "Hex: The Third Seal",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_hexTheThirdSeal.png/96px-IconPerks_hexTheThirdSeal.png"
   },
@@ -408,6 +412,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_predator.png/96px-IconPerks_predator.png"
   },
   {
+    "name": "Rampage",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_Rampage.png/96px-T_UI_iconsPerks_Rampage.png"
+  },
+  {
     "name": "Rancor",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_rancor.png/96px-IconPerks_rancor.png"
   },
@@ -474,6 +482,10 @@
   {
     "name": "Shattered Hope",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_shatteredHope.png/96px-IconPerks_shatteredHope.png"
+  },
+  {
+    "name": "Silent Shadow",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_SilentShadow.png/96px-T_UI_iconsPerks_SilentShadow.png"
   },
   {
     "name": "Sloppy Butcher",
