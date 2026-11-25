@@ -23,7 +23,7 @@ export default function Header({ showBack = true }: { showBack?: boolean }) {
   };
 
   return (
-    <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-border bg-linear-to-b from-card to-card/75 px-4 py-4 text-card-foreground sm:px-8 sm:py-5">
+    <header className="relative grid grid-cols-[1fr_auto_1fr] items-center gap-3 bg-linear-to-b from-card to-card/75 px-4 py-4 text-card-foreground after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-linear-to-r after:from-transparent after:via-selected-border/75 after:to-transparent sm:px-8 sm:py-5">
       {showBack && (
         <button
           aria-label="Back"
