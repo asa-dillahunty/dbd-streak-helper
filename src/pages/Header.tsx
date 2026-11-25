@@ -5,7 +5,7 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const lobbyButton =
-  "inline-flex h-11 items-center justify-center gap-2 border border-stone-600/80 bg-stone-950/85 px-3 text-sm text-stone-200 hover:border-orange-400/60 hover:text-orange-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-300";
+  "inline-flex h-11 items-center justify-center gap-2 border border-stone-600/80 bg-stone-950/85 px-3 text-sm text-stone-200 hover:border-red-600/70 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300";
 
 export default function Header() {
   const nav = useNavigate();
