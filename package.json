@@ -9,6 +9,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "build": "vite build",
+    "postbuild": "node scripts/copy-route-entries.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "scrape": "node ./scraper/scrape.js"
