@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Game, Streak } from "@/lib/customTypes";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import PageWrapper from "./PageWrapper";
+import PageWrapper from "../components/PageWrapper";
 
 const StreakListPage: React.FC = () => {
   const [streaks, setStreaks] = useState<Streak[]>([exampleStreak]);

@@ -7,7 +7,7 @@ import PrizeWheel, { PrizeItem } from "@/components/PrizeWheel";
 import { Button } from "@/components/ui/button";
 import { useGameData } from "@/assets/gameData";
 import HardCore from "./HardCore";
-import PageWrapper from "./PageWrapper";
+import PageWrapper from "../components/PageWrapper";
 // import PipTracker from "@/components/PipTracker";
 
 const Testing: React.FC = () => {

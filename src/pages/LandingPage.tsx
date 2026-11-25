@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import PageWrapper from "./PageWrapper";
+import PageWrapper from "../components/PageWrapper";
 import { ChevronRight } from "lucide-react";
 import { DYING_URL, HOOK_URL, SACRIFICED_URL } from "@/assets/gameData";
-import LobbyBackground from "./LobbyBackground";
+import LobbyBackground from "../components/LobbyBackground";
 
 const pages = [
   { to: "./streaks", label: "Streaks", icon: HOOK_URL },
