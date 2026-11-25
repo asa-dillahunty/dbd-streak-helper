@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "./css/LandingPage.css";
 import PageWrapper from "./PageWrapper";
 import { FaArrowRightLong } from "react-icons/fa6";
 
