@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { Shuffle, Sparkles } from "lucide-react";
+import { useState, useSyncExternalStore } from "react";
+import { Monitor, Shuffle, Sparkles } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
 import campfire from "@/assets/dbd-lobby-campfire.jpg";
 import { OBSESSION_URL } from "@/assets/gameData";
 import BingoListEditor from "@/components/BingoListEditor";
@@ -14,12 +15,15 @@ import {
   initialBingoBoard,
   toggleCompletion,
   updatePromptPool,
+  type BingoBoardState,
 } from "@/lib/bingo";
 import usePersistedState from "@/lib/usePersistedState";
 import { defaultPlayerColor, playerColors } from "@/lib/playerColors";
 import { cn } from "@/lib/utils";
 
 const genericPlayer: PlayerOption = { id: "generic", name: "Generic" };
+const boardKey = "dbd-bingo-board-v1";
+const rosterKey = "dbd-bingo-roster-v1";
 const defaultPlayers: PlayerOption[] = [
   {
     id: "stantley",
@@ -40,34 +44,87 @@ const defaultPlayers: PlayerOption[] = [
 const controlClass =
   "min-h-11 rounded-sm border-stone-600 bg-stone-950 text-stone-100 hover:bg-stone-800 hover:text-white focus-visible:ring-red-300";
 const tileClass =
-  "flex h-full min-h-24 min-w-0 flex-col items-center justify-center gap-1.5 border px-0.5 py-2 text-center text-xs leading-tight [overflow-wrap:anywhere] sm:min-h-28 sm:px-2 sm:text-sm";
+  "flex h-full min-w-0 flex-col items-center justify-center gap-1.5 border px-0.5 py-2 text-center text-xs leading-tight [overflow-wrap:anywhere] sm:px-2 sm:text-sm";
 
 export default function BingoPage() {
-  const [board, setBoard] = usePersistedState(
-    "dbd-bingo-board-v1",
-    initialBingoBoard,
+  const [searchParams] = useSearchParams();
+  return searchParams.get("view") === "stream" ? (
+    <BingoStream />
+  ) : (
+    <EditableBingo />
   );
-  const [roster, setRoster] = usePersistedState(
-    "dbd-bingo-roster-v1",
-    defaultPlayers,
-  );
-  const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
-  const [announcement, setAnnouncement] = useState("");
+}
 
-  const players = roster.map((player, index) => ({
+function subscribeToStorage(onChange: () => void) {
+  window.addEventListener("storage", onChange);
+  return () => window.removeEventListener("storage", onChange);
+}
+
+function useStreamValue<T>(key: string, fallback: T): T {
+  const stored = useSyncExternalStore(subscribeToStorage, () => {
+    try {
+      return window.localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  });
+  try {
+    return stored === null ? fallback : ((JSON.parse(stored) as T) ?? fallback);
+  } catch {
+    return fallback;
+  }
+}
+
+function BingoStream() {
+  const board = useStreamValue(boardKey, initialBingoBoard);
+  const roster = useStreamValue(rosterKey, defaultPlayers);
+
+  return (
+    <main className="flex min-h-dvh items-center justify-center bg-stone-950 p-1 text-stone-100">
+      <h1 className="sr-only">DBD Bingo Stream View</h1>
+      <Link
+        to="?"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-20 focus:bg-stone-950 focus:p-2 focus:text-white"
+      >
+        Open Bingo controls
+      </Link>
+      <div className="w-full max-w-[min(40rem,100dvh)]">
+        <BingoBoard board={board} players={resolvePlayers(roster)} />
+      </div>
+    </main>
+  );
+}
+
+function resolvePlayers(roster: PlayerOption[]) {
+  return roster.map((player, index) => ({
     ...player,
     iconURL:
       player.iconURL ??
       defaultPlayers.find(({ id }) => id === player.id)?.iconURL,
     color: player.color ?? defaultPlayerColor(index),
   }));
-  const playersById = new Map(players.map((player) => [player.id, player]));
-  const activePlayer =
-    (selectedPlayerId ? playersById.get(selectedPlayerId) : undefined) ??
-    genericPlayer;
-  const prompts = new Map(
-    getPrompts(board.customPrompts).map(({ id, text }) => [id, text]),
-  );
+}
+
+function EditableBingo() {
+  const [board, setBoard] = usePersistedState(boardKey, initialBingoBoard);
+  const [roster, setRoster] = usePersistedState(rosterKey, defaultPlayers);
+  const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
+  const [announcement, setAnnouncement] = useState("");
+
+  const players = resolvePlayers(roster);
+
+  function claimTile(id: string) {
+    const activePlayer =
+      players.find(({ id }) => id === selectedPlayerId) ?? genericPlayer;
+    setBoard((current) =>
+      toggleCompletion(current, id, {
+        playerId: activePlayer.id,
+        playerName: activePlayer.name,
+        iconURL: activePlayer.iconURL,
+        color: activePlayer.color,
+      }),
+    );
+  }
 
   return (
     <div className="relative isolate min-h-dvh bg-stone-950 text-stone-100">
@@ -138,6 +195,7 @@ export default function BingoPage() {
               </Button>
               <BingoListEditor
                 title="Edit prompts"
+                addOnEnter
                 description="Custom prompts fill the board first. Starter prompts fill any remaining squares."
                 entryLabel="Prompt"
                 entries={board.customPrompts}
@@ -147,25 +205,29 @@ export default function BingoPage() {
                   setAnnouncement("Prompt pool saved.");
                 }}
               />
+              <Button asChild variant="outline" className={controlClass}>
+                <Link
+                  to="?view=stream"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Stream View (opens in a new tab)"
+                >
+                  <Monitor aria-hidden="true" />
+                  Stream View
+                </Link>
+              </Button>
             </div>
             <aside
               aria-labelledby="bingo-players"
               className="min-w-0 border border-stone-700 bg-stone-950/90 p-3 sm:p-4 lg:col-start-2 lg:row-span-2 lg:row-start-1"
             >
-              <h3
-                id="bingo-players"
-                className="mb-2 text-sm font-bold tracking-wider text-stone-200 uppercase"
-              >
-                Players
-              </h3>
-              <PlayerPicker
-                players={players}
-                selectedPlayerId={selectedPlayerId}
-                onSelect={(id) =>
-                  setSelectedPlayerId((current) => (current === id ? null : id))
-                }
-              />
-              <div className="mt-3">
+              <div className="mb-2 flex flex-wrap items-center justify-between gap-x-2">
+                <h3
+                  id="bingo-players"
+                  className="text-sm font-bold tracking-wider text-stone-200 uppercase"
+                >
+                  Players
+                </h3>
                 <BingoListEditor
                   title="Edit players"
                   description="Existing marks keep the name recorded when the square was completed."
@@ -194,96 +256,15 @@ export default function BingoPage() {
                   }}
                 />
               </div>
-            </aside>
-            <ul
-              aria-label="Bingo board"
-              className="grid grid-cols-5 gap-1 border border-stone-700 bg-stone-950/90 p-1 sm:gap-2 sm:p-2 lg:col-start-1 lg:row-start-2"
-            >
-              {board.layout.map((id, index) => {
-                if (board.freeSpace && index === CENTER_INDEX) {
-                  return (
-                    <li
-                      key={id}
-                      className={cn(
-                        tileClass,
-                        "border-amber-700 bg-amber-950 text-amber-100",
-                      )}
-                    >
-                      <Sparkles
-                        aria-hidden="true"
-                        className="size-4 shrink-0"
-                      />
-                      <span className="font-bold">Free Space</span>
-                      <span className="sr-only">Automatically marked</span>
-                    </li>
-                  );
+              <PlayerPicker
+                players={players}
+                selectedPlayerId={selectedPlayerId}
+                onSelect={(id) =>
+                  setSelectedPlayerId((current) => (current === id ? null : id))
                 }
-
-                const completion = board.completions[id];
-                const namedCompletion =
-                  completion?.playerId !== genericPlayer.id
-                    ? completion
-                    : undefined;
-                const owner =
-                  namedCompletion && playersById.get(namedCompletion.playerId);
-                const color = owner ? owner.color : namedCompletion?.color;
-                return (
-                  <li key={id} className="min-w-0">
-                    <button
-                      type="button"
-                      aria-pressed={Boolean(completion)}
-                      onClick={() =>
-                        setBoard((current) =>
-                          toggleCompletion(current, id, {
-                            playerId: activePlayer.id,
-                            playerName: activePlayer.name,
-                            iconURL: activePlayer.iconURL,
-                            color: activePlayer.color,
-                          }),
-                        )
-                      }
-                      className={cn(
-                        tileClass,
-                        "cursor-latched group relative isolate w-full overflow-hidden font-semibold focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-red-300",
-                        completion
-                          ? "border-red-500 bg-red-950 text-red-50 hover:bg-red-900"
-                          : "border-stone-700 bg-stone-900 text-stone-100 hover:border-stone-400 hover:bg-stone-800",
-                      )}
-                      style={
-                        color
-                          ? {
-                              borderColor: playerColors[color],
-                              backgroundColor: `color-mix(in srgb, ${playerColors[color]} 30%, var(--color-stone-950))`,
-                            }
-                          : undefined
-                      }
-                    >
-                      <img
-                        src={OBSESSION_URL}
-                        alt=""
-                        className="pointer-events-none absolute inset-0 -z-10 h-full w-full scale-150 object-contain opacity-0 group-hover:opacity-40 group-focus-visible:opacity-40 motion-safe:transition-opacity"
-                      />
-                      <span className="w-full">{prompts.get(id)}</span>
-                      {namedCompletion && (
-                        <>
-                          <span className="sr-only">
-                            Completed by {namedCompletion.playerName}
-                          </span>
-                          <PlayerAvatar
-                            name={namedCompletion.playerName}
-                            iconURL={
-                              owner ? owner.iconURL : namedCompletion.iconURL
-                            }
-                            color={color}
-                            className="absolute right-1 bottom-1 size-7 sm:size-8"
-                          />
-                        </>
-                      )}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+              />
+            </aside>
+            <BingoBoard board={board} players={players} onClaim={claimTile} />
           </div>
           <p role="status" className="sr-only">
             {announcement}
@@ -291,5 +272,117 @@ export default function BingoPage() {
         </section>
       </PageWrapper>
     </div>
+  );
+}
+
+function BingoBoard({
+  board,
+  players,
+  onClaim,
+}: {
+  board: BingoBoardState;
+  players: PlayerOption[];
+  onClaim?: (id: string) => void;
+}) {
+  const Tile = onClaim ? "button" : "div";
+  const sizing = onClaim
+    ? "min-h-24 sm:min-h-28"
+    : "min-h-[clamp(3rem,15dvh,7rem)]";
+  const playersById = new Map(players.map((player) => [player.id, player]));
+  const prompts = new Map(
+    getPrompts(board.customPrompts).map(({ id, text }) => [id, text]),
+  );
+  return (
+    <ul
+      aria-label="Bingo board"
+      className={cn(
+        "grid grid-cols-5 gap-1 border border-stone-700 bg-stone-950/90 p-1",
+        onClaim && "sm:gap-2 sm:p-2 lg:col-start-1 lg:row-start-2",
+      )}
+    >
+      {board.layout.map((id, index) => {
+        if (board.freeSpace && index === CENTER_INDEX) {
+          return (
+            <li
+              key={id}
+              className={cn(
+                tileClass,
+                sizing,
+                "border-amber-700 bg-amber-950 text-amber-100",
+              )}
+            >
+              <Sparkles aria-hidden="true" className="size-4 shrink-0" />
+              <span className="font-bold">Free Space</span>
+              <span className="sr-only">Automatically marked</span>
+            </li>
+          );
+        }
+
+        const completion = board.completions[id];
+        const namedCompletion =
+          completion?.playerId !== genericPlayer.id ? completion : undefined;
+        const owner =
+          namedCompletion && playersById.get(namedCompletion.playerId);
+        const color = owner ? owner.color : namedCompletion?.color;
+        return (
+          <li key={id} className="min-w-0">
+            <Tile
+              {...(onClaim && {
+                type: "button",
+                "aria-pressed": Boolean(completion),
+                onClick: () => onClaim(id),
+              })}
+              className={cn(
+                tileClass,
+                sizing,
+                "relative isolate w-full overflow-hidden font-semibold",
+                onClaim &&
+                  "cursor-latched group focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-red-300",
+                completion
+                  ? "border-red-500 bg-red-950 text-red-50"
+                  : "border-stone-700 bg-stone-900 text-stone-100",
+                onClaim &&
+                  (completion
+                    ? "hover:bg-red-900"
+                    : "hover:border-stone-400 hover:bg-stone-800"),
+              )}
+              style={
+                color
+                  ? {
+                      borderColor: playerColors[color],
+                      backgroundColor: `color-mix(in srgb, ${playerColors[color]} 30%, var(--color-stone-950))`,
+                    }
+                  : undefined
+              }
+            >
+              {onClaim && (
+                <img
+                  src={OBSESSION_URL}
+                  alt=""
+                  className="pointer-events-none absolute inset-0 -z-10 h-full w-full scale-150 object-contain opacity-0 group-hover:opacity-40 group-focus-visible:opacity-40 motion-safe:transition-opacity"
+                />
+              )}
+              <span className="w-full">{prompts.get(id)}</span>
+              {!onClaim && completion && !namedCompletion && (
+                <span className="sr-only">Completed</span>
+              )}
+              {namedCompletion && (
+                <>
+                  <span className="sr-only">
+                    Completed by {namedCompletion.playerName}
+                  </span>
+                  <PlayerAvatar
+                    name={namedCompletion.playerName}
+                    iconURL={owner ? owner.iconURL : namedCompletion.iconURL}
+                    color={color}
+                    className="absolute right-1 bottom-1 size-7 sm:size-8"
+                  />
+                </>
+              )}
+            </Tile>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

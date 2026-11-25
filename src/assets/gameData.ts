@@ -28,6 +28,8 @@ export function useGameData() {
   return { killers, survivors, killerPerks, survivorPerks };
 }
 
+// Browse other options: https://deadbydaylight.wiki.gg/wiki/Category:HUD_images
+
 export const HOOK_URL =
   "https://deadbydaylight.wiki.gg/images/IconHelpLoading_hook.png";
 
@@ -43,8 +45,9 @@ export const EXIT_URL =
 export const OBSESSION_URL =
   "https://deadbydaylight.wiki.gg/images/IconHelp_obsession.png";
 
-  // export const HUNTER_URL = "https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/a/a4/DailyRitualIcon_hunter.png"
 export const HUNTER_URL = "https://deadbydaylight.wiki.gg/images/DailyRitualIcon_hunter.png";
+
 export const OBJECTIVES_URL = "https://deadbydaylight.wiki.gg/images/DailyRitualIcon_objectives.png";
+
 export const BASEMENT_URL =
   "https://deadbydaylight.wiki.gg/images/IconHelp_basement.png";

@@ -28,6 +28,7 @@ interface BingoListEditorProps {
   entries: ListEntry[];
   onSave: (entries: ListEntry[]) => void;
   showPlayerAppearance?: boolean;
+  addOnEnter?: boolean;
   triggerClassName?: string;
 }
 
@@ -47,6 +48,7 @@ export default function BingoListEditor({
   onSave,
   triggerClassName,
   showPlayerAppearance = false,
+  addOnEnter = false,
 }: BingoListEditorProps) {
   const formId = useId();
   const nextFocus = useRef<string | null>(null);
@@ -154,6 +156,17 @@ export default function BingoListEditor({
                       }}
                       type="text"
                       value={text}
+                      enterKeyHint={addOnEnter ? "next" : undefined}
+                      onKeyDown={(event) => {
+                        if (
+                          !addOnEnter ||
+                          event.key !== "Enter" ||
+                          event.nativeEvent.isComposing
+                        )
+                          return;
+                        event.preventDefault();
+                        if (!event.repeat) addEntry();
+                      }}
                       onChange={(event) =>
                         updateEntry(id, { text: event.target.value })
                       }
