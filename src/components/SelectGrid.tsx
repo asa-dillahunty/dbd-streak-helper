@@ -28,10 +28,6 @@ const SelectGrid: React.FC<SelectGridProps> = ({ items, handleSelection }) => {
     setCurrentPage(0); // Reset to first page on new search
   };
 
-  // const handleSelection = (item: PrizeItem) => {
-  //   console.log(item.name);
-  // };
-
   return (
     <div className="p-4">
       {/* Search bar */}
@@ -42,7 +38,7 @@ const SelectGrid: React.FC<SelectGridProps> = ({ items, handleSelection }) => {
           placeholder="Search by name..."
           value={searchQuery}
           onChange={handleSearchChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300"
+          className="w-full rounded-md border border-input bg-card px-4 py-2 text-card-foreground placeholder:text-muted-foreground focus-visible:outline-2 focus-visible:outline-ring"
         />
       </div>
 
@@ -53,12 +49,12 @@ const SelectGrid: React.FC<SelectGridProps> = ({ items, handleSelection }) => {
         {currentItems.map((item, index) => (
           <div
             key={index + item.name}
-            className="relative group flex justify-center items-center bg-slate-800 hover:bg-slate-700 rounded hover:cursor-pointer h-min"
+            className="group relative flex h-min items-center justify-center rounded bg-muted hover:cursor-pointer hover:bg-accent"
             onClick={() => handleSelection(item)}
           >
             <img src={item.iconURL} alt={item.name} className="w-28 h-28" />
             {/* Hovercard */}
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white text-xs rounded px-2 py-1 pointer-events-none whitespace-nowrap">
+            <div className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded bg-foreground px-2 py-1 text-xs whitespace-nowrap text-background opacity-0 transition-opacity group-hover:opacity-100">
               {item.name}
             </div>
           </div>
@@ -70,8 +66,7 @@ const SelectGrid: React.FC<SelectGridProps> = ({ items, handleSelection }) => {
         <Button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
           disabled={currentPage === 0}
-          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
-          variant={"default"}
+          variant="outline"
         >
           Previous
         </Button>
@@ -83,7 +78,7 @@ const SelectGrid: React.FC<SelectGridProps> = ({ items, handleSelection }) => {
             setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))
           }
           disabled={currentPage >= totalPages - 1 || totalPages === 0}
-          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+          variant="outline"
         >
           Next
         </Button>

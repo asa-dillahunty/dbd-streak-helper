@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { PrizeItem } from "./PrizeWheel";
+import { Button } from "./ui/button";
 
 interface LootBoxSelectorProps {
   items: PrizeItem[];
@@ -106,10 +107,10 @@ export default function LootBoxSelector({ items }: LootBoxSelectorProps) {
   return (
     <div className="relative flex flex-col items-center gap-5">
       <div
-        className="relative w-200 border border-gray-300 rounded-md bg-slate-900 overflow-hidden"
+        className="relative w-200 overflow-hidden rounded-md border bg-card"
         ref={containerRef}
       >
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-1 bg-red-500/20 pointer-events-none z-1" />
+        <div className="pointer-events-none absolute top-0 left-1/2 z-1 h-full w-1 -translate-x-1/2 bg-selected-border/30" />
         <motion.div
           animate={controls}
           className="flex items-center pt-5 pb-5"
@@ -118,7 +119,7 @@ export default function LootBoxSelector({ items }: LootBoxSelectorProps) {
           {repeatedItems.map((item, index) => (
             <div
               key={index}
-              className="shrink-0 bg-slate-700 rounded-lg"
+              className="shrink-0 rounded-lg bg-muted"
               style={{ width: `${cardWidth}px`, height: `${cardWidth}px` }}
             >
               <img
@@ -130,12 +131,9 @@ export default function LootBoxSelector({ items }: LootBoxSelectorProps) {
           ))}
         </motion.div>
       </div>
-      <button
-        onClick={spin}
-        className="px-4 py-2 bg-blue-600 text-white rounded-md"
-      >
+      <Button type="button" onClick={spin}>
         {spinning ? "Spinning..." : "Spin"}
-      </button>
+      </Button>
       <div className="mt-4">
         Selected Prize:{" "}
         {selectedIndex !== null && !spinning && items[selectedIndex]?.name}

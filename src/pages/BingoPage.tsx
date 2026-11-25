@@ -41,8 +41,7 @@ const defaultPlayers: PlayerOption[] = [
   },
 ];
 
-const controlClass =
-  "min-h-11 rounded-sm border-stone-600 bg-stone-950 text-stone-100 hover:bg-stone-800 hover:text-white focus-visible:ring-red-300";
+const controlClass = "min-h-11 rounded-sm bg-card text-card-foreground";
 const tileClass =
   "flex h-full min-w-0 flex-col items-center justify-center gap-1.5 border px-0.5 py-2 text-center text-xs leading-tight [overflow-wrap:anywhere] sm:px-2 sm:text-sm";
 
@@ -80,11 +79,11 @@ function BingoStream() {
   const roster = useStreamValue(rosterKey, defaultPlayers);
 
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-stone-950 p-1 text-stone-100">
+    <main className="flex min-h-dvh items-center justify-center bg-background p-1 text-foreground">
       <h1 className="sr-only">DBD Bingo Stream View</h1>
       <Link
         to="?"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-20 focus:bg-stone-950 focus:p-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-20 focus:bg-card focus:p-2 focus:text-card-foreground"
       >
         Open Bingo controls
       </Link>
@@ -127,11 +126,11 @@ function EditableBingo() {
   }
 
   return (
-    <div className="relative isolate min-h-dvh bg-stone-950 text-stone-100">
+    <div className="relative isolate min-h-dvh bg-background text-foreground">
       <img
         src={campfire}
         alt=""
-        className="pointer-events-none fixed inset-0 -z-10 h-full w-full object-cover opacity-30"
+        className="pointer-events-none fixed inset-0 -z-10 h-full w-full object-cover opacity-50 dark:opacity-80"
       />
       <PageWrapper>
         <section
@@ -140,7 +139,7 @@ function EditableBingo() {
         >
           <h2
             id="bingo-heading"
-            className="mb-4 border-l-4 border-red-600 pl-3 text-3xl font-bold tracking-wide uppercase sm:mb-6 sm:text-4xl"
+            className="mb-4 border-l-4 border-selected-border pl-3 text-3xl font-bold tracking-wide uppercase sm:mb-6 sm:text-4xl"
           >
             DBD Bingo
           </h2>
@@ -148,7 +147,7 @@ function EditableBingo() {
             <div className="flex flex-wrap gap-2 lg:col-start-1 lg:row-start-1">
               <Button
                 type="button"
-                className="min-h-11 rounded-sm border border-red-700 bg-red-900 text-white hover:bg-red-800 focus-visible:ring-red-300"
+                className="min-h-11 rounded-sm"
                 onClick={() => {
                   setBoard({
                     ...board,
@@ -187,7 +186,9 @@ function EditableBingo() {
                 <span
                   aria-hidden="true"
                   className={
-                    board.freeSpace ? "text-red-200" : "text-stone-400"
+                    board.freeSpace
+                      ? "text-selected-foreground"
+                      : "text-muted-foreground"
                   }
                 >
                   {board.freeSpace ? "On" : "Off"}
@@ -219,12 +220,12 @@ function EditableBingo() {
             </div>
             <aside
               aria-labelledby="bingo-players"
-              className="min-w-0 border border-stone-700 bg-stone-950/90 p-3 sm:p-4 lg:col-start-2 lg:row-span-2 lg:row-start-1"
+              className="min-w-0 border border-border bg-card/90 p-3 text-card-foreground sm:p-4 lg:col-start-2 lg:row-span-2 lg:row-start-1"
             >
               <div className="mb-2 flex flex-wrap items-center justify-between gap-x-2">
                 <h3
                   id="bingo-players"
-                  className="text-sm font-bold tracking-wider text-stone-200 uppercase"
+                  className="text-sm font-bold tracking-wider uppercase"
                 >
                   Players
                 </h3>
@@ -239,7 +240,7 @@ function EditableBingo() {
                     iconURL,
                     color,
                   }))}
-                  triggerClassName="min-h-11 rounded-sm border-transparent bg-transparent px-2 font-normal text-stone-400 shadow-none hover:bg-stone-900 hover:text-stone-100 focus-visible:ring-red-300"
+                  triggerClassName="min-h-11 rounded-sm border-transparent bg-transparent px-2 font-normal text-muted-foreground shadow-none"
                   onSave={(entries) => {
                     setRoster(
                       entries.map(({ id, text, iconURL, color }) => ({
@@ -296,7 +297,7 @@ function BingoBoard({
     <ul
       aria-label="Bingo board"
       className={cn(
-        "grid grid-cols-5 gap-1 border border-stone-700 bg-stone-950/90 p-1",
+        "grid grid-cols-5 gap-1 border border-border bg-card/90 p-1 text-card-foreground",
         onClaim && "sm:gap-2 sm:p-2 lg:col-start-1 lg:row-start-2",
       )}
     >
@@ -308,7 +309,7 @@ function BingoBoard({
               className={cn(
                 tileClass,
                 sizing,
-                "border-amber-700 bg-amber-950 text-amber-100",
+                "border-warning-border bg-warning text-warning-foreground",
               )}
             >
               <Sparkles aria-hidden="true" className="size-4 shrink-0" />
@@ -337,20 +338,21 @@ function BingoBoard({
                 sizing,
                 "relative isolate w-full overflow-hidden font-semibold",
                 onClaim &&
-                  "cursor-latched group focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-red-300",
+                  "cursor-latched group focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring",
                 completion
-                  ? "border-red-500 bg-red-950 text-red-50"
-                  : "border-stone-700 bg-stone-900 text-stone-100",
+                  ? "border-selected-border bg-selected text-selected-foreground"
+                  : "border-border bg-muted",
+                color && "text-card-foreground",
                 onClaim &&
                   (completion
-                    ? "hover:bg-red-900"
-                    : "hover:border-stone-400 hover:bg-stone-800"),
+                    ? "hover:bg-selected/75"
+                    : "hover:border-input hover:bg-accent"),
               )}
               style={
                 color
                   ? {
                       borderColor: playerColors[color],
-                      backgroundColor: `color-mix(in srgb, ${playerColors[color]} 30%, var(--color-stone-950))`,
+                      backgroundColor: `color-mix(in srgb, ${playerColors[color]} 30%, var(--card))`,
                     }
                   : undefined
               }
@@ -359,7 +361,7 @@ function BingoBoard({
                 <img
                   src={OBSESSION_URL}
                   alt=""
-                  className="pointer-events-none absolute inset-0 -z-10 h-full w-full scale-150 object-contain opacity-0 group-hover:opacity-40 group-focus-visible:opacity-40 motion-safe:transition-opacity"
+                  className="pointer-events-none absolute inset-0 -z-10 h-full w-full scale-150 object-contain opacity-0 invert group-hover:opacity-40 group-focus-visible:opacity-40 motion-safe:transition-opacity dark:invert-0"
                 />
               )}
               <span className="w-full">{prompts.get(id)}</span>

@@ -32,6 +32,9 @@ interface BingoListEditorProps {
   triggerClassName?: string;
 }
 
+const fieldClass =
+  "min-h-11 min-w-0 rounded-sm border border-input bg-muted px-3 text-base focus-visible:outline-2 focus-visible:outline-ring";
+
 function isHttpsUrl(value: string): boolean {
   try {
     return new URL(value).protocol === "https:";
@@ -124,12 +127,10 @@ export default function BingoListEditor({
           {title}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[85dvh] overflow-y-auto rounded-sm border-stone-600 bg-stone-950 text-stone-100">
+      <DialogContent className="max-h-[85dvh] overflow-y-auto rounded-sm border-input bg-popover text-popover-foreground">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription className="text-stone-300">
-            {description}
-          </DialogDescription>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <form onSubmit={save} className="grid gap-4">
           {draft.length > 0 && (
@@ -142,7 +143,7 @@ export default function BingoListEditor({
                   <div className="grid flex-1 gap-1">
                     <label
                       htmlFor={`${formId}-${id}`}
-                      className="text-sm text-stone-300"
+                      className="text-sm text-muted-foreground"
                     >
                       {entryLabel} {index + 1}
                     </label>
@@ -170,13 +171,13 @@ export default function BingoListEditor({
                       onChange={(event) =>
                         updateEntry(id, { text: event.target.value })
                       }
-                      className="min-h-11 min-w-0 rounded-sm border border-stone-600 bg-stone-900 px-3 text-base focus-visible:outline-2 focus-visible:outline-red-300"
+                      className={fieldClass}
                     />
                     {showPlayerAppearance && (
                       <>
                         <label
                           htmlFor={`${formId}-${id}-avatar`}
-                          className="mt-1 text-sm text-stone-300"
+                          className="mt-1 text-sm text-muted-foreground"
                         >
                           Steam avatar image URL (optional)
                         </label>
@@ -188,11 +189,11 @@ export default function BingoListEditor({
                           onChange={(event) =>
                             updateEntry(id, { iconURL: event.target.value })
                           }
-                          className="min-h-11 min-w-0 rounded-sm border border-stone-600 bg-stone-900 px-3 text-base focus-visible:outline-2 focus-visible:outline-red-300"
+                          className={fieldClass}
                         />
                         <label
                           htmlFor={`${formId}-${id}-color`}
-                          className="mt-1 text-sm text-stone-300"
+                          className="mt-1 text-sm text-muted-foreground"
                         >
                           Color for player {index + 1}
                         </label>
@@ -204,7 +205,7 @@ export default function BingoListEditor({
                               color: event.target.value as PlayerColor,
                             })
                           }
-                          className="min-h-11 min-w-0 rounded-sm border border-stone-600 bg-stone-900 px-3 text-base focus-visible:outline-2 focus-visible:outline-red-300"
+                          className={fieldClass}
                         >
                           {playerColorOptions.map((option) => (
                             <option key={option}>{option}</option>
@@ -217,7 +218,7 @@ export default function BingoListEditor({
                     type="button"
                     variant="ghost"
                     aria-label={`Remove ${entryLabel.toLowerCase()} ${index + 1}`}
-                    className="min-h-11 text-red-200 hover:bg-red-950 hover:text-red-100 focus-visible:ring-red-300"
+                    className="min-h-11 text-selected-foreground hover:bg-selected hover:text-selected-foreground"
                     onClick={() => {
                       setDraft((current) =>
                         current.filter((entry) => entry.id !== id),
@@ -235,12 +236,12 @@ export default function BingoListEditor({
             type="button"
             variant="outline"
             onClick={addEntry}
-            className="min-h-11 justify-self-start border-stone-600 bg-stone-950 text-stone-100 hover:bg-stone-800 hover:text-white focus-visible:ring-red-300"
+            className="min-h-11 justify-self-start bg-card text-card-foreground"
           >
             Add {entryLabel.toLowerCase()}
           </Button>
           {error && (
-            <p role="alert" className="text-sm text-red-300">
+            <p role="alert" className="text-sm text-selected-foreground">
               {error}
             </p>
           )}
@@ -249,15 +250,12 @@ export default function BingoListEditor({
               <Button
                 type="button"
                 variant="ghost"
-                className="min-h-11 hover:bg-stone-800 hover:text-white focus-visible:ring-red-300"
+                className="min-h-11"
               >
                 Cancel
               </Button>
             </DialogClose>
-            <Button
-              type="submit"
-              className="min-h-11 bg-red-800 text-white hover:bg-red-700 focus-visible:ring-red-300"
-            >
+            <Button type="submit" className="min-h-11">
               Save
             </Button>
           </div>

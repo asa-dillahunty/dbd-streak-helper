@@ -8,6 +8,7 @@ import TrapperVideo from "@/assets/the-trapper-dead-by-daylight.3840x2160-H.264.
 import HardcorePNG from "@/assets/hardcore.png";
 import SurvivorPNG from "@/assets/survivor.png";
 
+import Header from "@/components/Header";
 import SelectGrid from "@/components/SelectGrid";
 import { Button } from "@/components/ui/button";
 import {
@@ -153,23 +154,24 @@ export default function HardCore() {
   return (
     <HCContext value={contextValue}>
       <TooltipProvider delayDuration={750}>
-        <div className="flex flex-col items-center pb-20 pt-10">
+        <div className="relative isolate min-h-dvh bg-background text-foreground">
           <video
-            className="fixed top-0 left-0 w-full h-full object-cover"
+            className="pointer-events-none fixed inset-0 -z-10 h-full w-full object-cover opacity-25 dark:opacity-100"
             src={TrapperVideo}
             autoPlay
             loop
             muted
             playsInline
           />
-          <img src={HardcorePNG} alt={"hardcore"} className="z-1 -mb-20 p-0" />
-          <img src={SurvivorPNG} alt={"survivor"} className="z-1 mb-0 p-0" />
-          <div className="flex flex-row items-center px-10">
-            <HCSurvivors survivors={survivors} />
-          </div>
-          <Button onClick={reset} className="z-1">
-            Reset
-          </Button>
+          <Header />
+          <main className="flex flex-col items-center pt-10 pb-20">
+            <img src={HardcorePNG} alt="hardcore" className="-mb-20" />
+            <img src={SurvivorPNG} alt="survivor" />
+            <div className="flex flex-row items-center px-10">
+              <HCSurvivors survivors={survivors} />
+            </div>
+            <Button onClick={reset}>Reset</Button>
+          </main>
         </div>
       </TooltipProvider>
     </HCContext>
@@ -205,7 +207,7 @@ function SurvivorSmall({ survivor }: { survivor: HCSurvivor }) {
   };
 
   return (
-    <div className="flex flex-col items-center bg-slate-800/80 rounded text-white p-2 justify-center relative group">
+    <div className="group relative flex flex-col items-center justify-center rounded border border-border bg-card/95 p-2 text-card-foreground">
       <Button
         variant={"ghost"}
         size={"sm"}
@@ -264,10 +266,13 @@ function SurvivorSmall({ survivor }: { survivor: HCSurvivor }) {
         </div>
         <div className="flex flex-col items-center justify-center">
           <div
-            className="w-8 h-8 overflow-hidden hover:bg-slate-700 hover:cursor-pointer"
+            className="size-8 overflow-hidden hover:cursor-pointer hover:bg-accent"
             onClick={incEscapes}
           >
-            <img src={EXIT_URL} className="scale-175 object-center" />
+            <img
+              src={EXIT_URL}
+              className="scale-175 object-center invert dark:invert-0"
+            />
           </div>
           <p>{survivor.escapes || 0}</p>
           {survivor.ownedBy && (
@@ -382,11 +387,12 @@ function Players() {
       <div className="fixed top-1/5 right-1 z-10 pointer-events-none">
         <div className="flex flex-col justify-center gap-1 items-end">
           <Button
+            variant="outline"
             onClick={() => {
               setOpen(false);
               setSelectedPlayer(null);
             }}
-            className="bg-slate-800/80 hover:bg-slate-800 pointer-events-auto"
+            className="pointer-events-auto bg-card text-card-foreground"
           >
             <FaArrowRight />
           </Button>
@@ -400,8 +406,9 @@ function Players() {
     return (
       <div className="fixed top-1/5 right-1 z-10">
         <Button
+          variant="outline"
           onClick={() => setOpen(true)}
-          className="bg-slate-800/80 hover:bg-slate-800"
+          className="bg-card text-card-foreground"
         >
           <FaArrowLeft />
         </Button>
@@ -423,10 +430,9 @@ function PlayerSmall({ player }: { player: PrizeItem }) {
         e.stopPropagation();
       }}
       className={cn(
-        "flex flex-row justify-center items-center gap-2 bg-slate-800/80 hover:bg-slate-800 hover:cursor-pointer px-2 py-1 text-white rounded pointer-events-auto",
-        selectedPlayer?.name === player.name
-          ? "bg-blue-800/80 hover:bg-blue-800 "
-          : "",
+        "pointer-events-auto flex flex-row items-center justify-center gap-2 rounded border border-input bg-card px-2 py-1 text-card-foreground hover:cursor-pointer hover:bg-accent hover:text-accent-foreground",
+        selectedPlayer?.name === player.name &&
+          "border-selected-border bg-selected text-selected-foreground hover:bg-selected/75 hover:text-selected-foreground",
       )}
     >
       <div>{player.name}</div>

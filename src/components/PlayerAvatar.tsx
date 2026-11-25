@@ -18,7 +18,7 @@ export default function PlayerAvatar({
     <span
       aria-hidden="true"
       className={cn(
-        "relative grid size-7 shrink-0 place-items-center overflow-hidden rounded-sm border-2 border-stone-500 bg-stone-950 text-xs font-bold text-stone-100",
+        "relative grid size-7 shrink-0 place-items-center overflow-hidden rounded-sm border-2 border-input bg-card text-xs font-bold text-card-foreground",
         className,
       )}
       style={color ? { borderColor: playerColors[color] } : undefined}
@@ -33,7 +33,7 @@ export default function PlayerAvatar({
           onError={(event) => {
             event.currentTarget.hidden = true;
           }}
-          className="absolute inset-0 size-full bg-stone-950 object-cover"
+          className="absolute inset-0 size-full bg-card object-cover"
         />
       )}
     </span>

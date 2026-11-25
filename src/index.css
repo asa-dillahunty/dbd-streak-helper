@@ -2,46 +2,35 @@
 
 @plugin "tailwindcss-animate";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: oklch(1 0 0);
-
-  --foreground: oklch(0.129 0.042 264.695);
-
-  --card: oklch(1 0 0);
-
-  --card-foreground: oklch(0.129 0.042 264.695);
-
-  --popover: oklch(1 0 0);
-
-  --popover-foreground: oklch(0.129 0.042 264.695);
-
-  --primary: oklch(0.208 0.042 265.755);
-
-  --primary-foreground: oklch(0.984 0.003 247.858);
-
-  --secondary: oklch(0.968 0.007 247.896);
-
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-
-  --muted: oklch(0.968 0.007 247.896);
-
-  --muted-foreground: oklch(0.554 0.046 257.417);
-
-  --accent: oklch(0.968 0.007 247.896);
-
-  --accent-foreground: oklch(0.208 0.042 265.755);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-
-  --border: oklch(0.929 0.013 255.508);
-
-  --input: oklch(0.929 0.013 255.508);
-
-  --ring: oklch(0.704 0.04 256.788);
+  color-scheme: light;
+  --background: var(--color-stone-100);
+  --foreground: var(--color-stone-950);
+  --card: var(--color-stone-50);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--card-foreground);
+  --primary: var(--color-red-800);
+  --primary-foreground: var(--color-white);
+  --secondary: var(--color-stone-200);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--color-stone-100);
+  --muted-foreground: var(--color-stone-600);
+  --accent: var(--color-stone-200);
+  --accent-foreground: var(--foreground);
+  --destructive: var(--color-red-700);
+  --destructive-foreground: var(--color-white);
+  --border: var(--color-stone-300);
+  --input: var(--color-stone-400);
+  --ring: var(--color-red-700);
+  --selected: var(--color-red-100);
+  --selected-foreground: var(--color-red-900);
+  --selected-border: var(--color-red-600);
+  --warning: var(--color-amber-100);
+  --warning-foreground: var(--color-amber-950);
+  --warning-border: var(--color-amber-600);
 
   --chart-1: oklch(0.646 0.222 41.116);
 
@@ -73,25 +62,30 @@
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.129 0.042 264.695);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.129 0.042 264.695);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.984 0.003 247.858);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(0.279 0.041 260.031);
-  --input: oklch(0.279 0.041 260.031);
-  --ring: oklch(0.446 0.043 257.281);
+  color-scheme: dark;
+  --background: var(--color-stone-950);
+  --foreground: var(--color-stone-100);
+  --card: var(--color-stone-950);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--card-foreground);
+  --primary: var(--color-red-700);
+  --secondary: var(--color-stone-800);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--color-stone-900);
+  --muted-foreground: var(--color-stone-400);
+  --accent: var(--color-stone-800);
+  --accent-foreground: var(--foreground);
+  --destructive: var(--color-red-800);
+  --border: var(--color-stone-700);
+  --input: var(--color-stone-600);
+  --ring: var(--color-red-300);
+  --selected: var(--color-red-950);
+  --selected-foreground: var(--color-red-100);
+  --selected-border: var(--color-red-500);
+  --warning: var(--color-amber-950);
+  --warning-foreground: var(--color-amber-100);
+  --warning-border: var(--color-amber-700);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -127,6 +121,12 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-selected: var(--selected);
+  --color-selected-foreground: var(--selected-foreground);
+  --color-selected-border: var(--selected-border);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-border: var(--warning-border);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);

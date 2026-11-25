@@ -1,4 +1,5 @@
 import GameSummary from "@/components/GameSummary";
+import Header from "@/components/Header";
 import { Streak } from "@/lib/customTypes";
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
@@ -19,19 +20,29 @@ const StreakPage: React.FC = () => {
     }
   }, [streak]);
 
-  if (!streak) return <div className="text-center mt-4">Streak not found.</div>;
+  if (!streak) {
+    return (
+      <>
+        <Header />
+        <main className="mt-4 text-center">Streak not found.</main>
+      </>
+    );
+  }
 
   return (
-    <div className="flex flex-col h-screen p-4 overflow-hidden">
-      <h1 className="text-2xl font-bold mb-4">{streak.title}</h1>
-      <div
-        ref={scrollRef}
-        className="flex-1 overflow-y-auto border rounded-lg p-2 bg-gray-100"
-      >
-        {streak.games.map((game, index) => (
-          <GameSummary key={index} game={game} />
-        ))}
-      </div>
+    <div className="flex h-dvh flex-col">
+      <Header />
+      <main className="flex min-h-0 flex-1 flex-col p-4">
+        <h2 className="mb-4 text-2xl font-bold">{streak.title}</h2>
+        <div
+          ref={scrollRef}
+          className="flex-1 overflow-y-auto rounded-lg border bg-muted p-2"
+        >
+          {streak.games.map((game, index) => (
+            <GameSummary key={index} game={game} />
+          ))}
+        </div>
+      </main>
     </div>
   );
 };

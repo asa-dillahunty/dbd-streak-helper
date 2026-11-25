@@ -1,4 +1,3 @@
-import { FaArrowRight } from "react-icons/fa";
 // Predefined list of killers with icons
 
 import { Game } from "@/lib/customTypes";
@@ -31,7 +30,7 @@ const GameSummary: React.FC<GameSummaryProps> = ({ game }) => {
   console.log(displayedPerks);
 
   return (
-    <div className="bg-white shadow-md p-4 rounded-lg border flex items-center">
+    <div className="flex items-center rounded-lg border bg-card p-4 text-card-foreground shadow-md">
       <div className="bg-gray-800 mr-4">
         <img
           src={killerIcon}

@@ -35,9 +35,9 @@ export default function PlayerPicker({
           aria-pressed={id === selectedPlayerId}
           onClick={() => onSelect(id)}
           className={cn(
-            "h-auto min-h-11 max-w-full justify-start rounded-sm border-stone-600 bg-stone-950 whitespace-normal text-stone-100 hover:bg-stone-800 hover:text-white focus-visible:ring-red-300",
+            "h-auto min-h-11 max-w-full justify-start rounded-sm bg-card whitespace-normal text-card-foreground",
             id === selectedPlayerId &&
-              "border-red-400 bg-red-950 text-red-100 hover:bg-red-900",
+              "border-selected-border bg-selected text-selected-foreground hover:bg-selected/75 hover:text-selected-foreground",
           )}
         >
           {(iconURL || color) && (

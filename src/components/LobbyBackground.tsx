@@ -3,12 +3,12 @@ import lobbyStill from "@/assets/dbd-lobby-campfire.jpg";
 
 export default function LobbyBackground() {
   return (
-    <picture className="pointer-events-none fixed inset-0 -z-10 bg-black">
+    <picture className="pointer-events-none fixed inset-0 -z-10 bg-background">
       <source media="(prefers-reduced-motion: reduce)" srcSet={lobbyStill} />
       <img
         src={lobbyGif}
         alt=""
-        className="h-full w-full object-cover object-[32%_center] opacity-80 sm:object-center"
+        className="h-full w-full object-cover object-[32%_center] opacity-80 sm:object-center dark:opacity-80"
       />
     </picture>
   );

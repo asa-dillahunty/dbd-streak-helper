@@ -1,4 +1,3 @@
-import GameSummary from "@/components/GameSummary";
 import LootBoxSelector from "@/components/LootBoxSelector";
 
 import SelectGrid from "@/components/SelectGrid";
@@ -6,7 +5,6 @@ import { useState } from "react";
 import PrizeWheel, { PrizeItem } from "@/components/PrizeWheel";
 import { Button } from "@/components/ui/button";
 import { useGameData } from "@/assets/gameData";
-import HardCore from "./HardCore";
 import PageWrapper from "../components/PageWrapper";
 // import PipTracker from "@/components/PipTracker";
 
@@ -23,7 +21,7 @@ const Testing: React.FC = () => {
       <div className="flex flex-col items-center pb-20">
         {/* <HardCore /> */}
         <h1 className="text-2xl font-bold mb-4">Here</h1>
-        <SelectGrid items={killerPerks} />
+        <SelectGrid items={killerPerks} handleSelection={(selection)=>{console.log(selection)}} />
         {/* <PipTracker /> */}
         {/* <LootBoxSelector items={killerPerks} /> */}
 

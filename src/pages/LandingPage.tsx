@@ -2,12 +2,9 @@ import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 import { ChevronRight } from "lucide-react";
 import {
-  BASEMENT_URL,
   DYING_URL,
   HOOK_URL,
-  HUNTER_URL,
   OBJECTIVES_URL,
-  OBSESSION_URL,
   SACRIFICED_URL,
 } from "@/assets/gameData";
 import LobbyBackground from "../components/LobbyBackground";
@@ -21,7 +18,7 @@ const pages = [
 
 export default function LandingPage() {
   return (
-    <div className="relative isolate min-h-dvh text-white">
+    <div className="relative isolate min-h-dvh bg-background text-foreground">
       <LobbyBackground />
       <PageWrapper showBack={false}>
         <nav
@@ -31,20 +28,20 @@ export default function LandingPage() {
           {pages.map(({ to, label, icon }) => (
             <Link
               key={to}
-              className="group flex min-h-14 items-center gap-4 border border-stone-600/80 border-l-2 border-l-stone-500 bg-linear-to-r from-stone-950 to-stone-900/85 px-4 py-3 text-stone-100 hover:border-red-600/70 hover:border-l-red-500 hover:from-red-950 hover:to-stone-950 focus-visible:border-red-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300 motion-safe:transition-colors"
+              className="group flex min-h-14 items-center gap-4 border border-input border-l-2 bg-linear-to-r from-card to-muted/90 px-4 py-3 text-card-foreground hover:border-selected-border hover:from-selected hover:to-card hover:text-selected-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-safe:transition-colors"
               to={to}
             >
               <img
                 src={icon}
                 alt=""
-                className="size-5 shrink-0 scale-150 object-contain"
+                className="size-5 shrink-0 scale-150 object-contain invert dark:invert-0"
               />
               <span className="flex-1 text-sm font-bold tracking-[0.16em] uppercase">
                 {label}
               </span>
               <ChevronRight
                 aria-hidden="true"
-                className="size-4 shrink-0 text-stone-400 group-hover:text-red-300 group-focus-visible:text-red-300"
+                className="size-4 shrink-0 text-muted-foreground group-hover:text-selected-foreground group-focus-visible:text-selected-foreground"
               />
             </Link>
           ))}

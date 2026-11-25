@@ -35,7 +35,7 @@ const StreakListPage: React.FC = () => {
         <div className="">
           <Link
             to="./new"
-            className="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 box-border"
+            className="inline-block px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 box-border"
           >
             Start a New Streak
           </Link>
@@ -47,7 +47,7 @@ const StreakListPage: React.FC = () => {
             {streaks.map((streak) => (
               <li
                 key={streak.id}
-                className="border p-4 rounded bg-accent hover:bg-accent/70 transition-colors"
+                className="border p-4 rounded bg-card text-card-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
               >
                 <Link to={`./${streak.id}`}>
                   <div className="flex justify-between items-center">
@@ -57,7 +57,7 @@ const StreakListPage: React.FC = () => {
                         Successful Games: {successfulGamesCount(streak.games)}
                       </p>
                     </div>
-                    <div className="text-blue-600 font-medium">
+                    <div className="text-selected-foreground font-medium">
                       View Details &rarr;
                     </div>
                   </div>
@@ -69,7 +69,7 @@ const StreakListPage: React.FC = () => {
         <Button onClick={() => saveStreaks()}>Save Streaks</Button>
         <Link
           to="./hardcore/"
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          className="px-4 py-2 bg-secondary text-secondary-foreground rounded hover:bg-secondary/80"
         >
           Hardcore Page
         </Link>

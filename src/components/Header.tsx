@@ -5,11 +5,14 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const lobbyButton =
-  "inline-flex h-11 items-center justify-center gap-2 border border-stone-600/80 bg-stone-950/85 px-3 text-sm text-stone-200 hover:border-red-600/70 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-300";
+  "inline-flex h-11 items-center justify-center gap-2 border border-input bg-card px-3 text-sm text-card-foreground hover:border-selected-border hover:bg-selected hover:text-selected-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export default function Header({ showBack = true }: { showBack?: boolean }) {
   const nav = useNavigate();
-  const [darkTheme, setDarkTheme] = useState(isDarkTheme());
+  const [darkTheme, setDarkTheme] = useState(isDarkTheme);
+  const isLocal = ["localhost", "127.0.0.1", "[::1]"].includes(
+    window.location.hostname,
+  );
 
   const handleBack = () => {
     if (window.history.state && window.history.state.idx > 0) {
@@ -19,13 +22,8 @@ export default function Header({ showBack = true }: { showBack?: boolean }) {
     }
   };
 
-  const handleToggleTheme = () => {
-    toggleTheme();
-    setDarkTheme(isDarkTheme());
-  };
-
   return (
-    <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-stone-500/40 bg-linear-to-b from-stone-950 to-stone-950/75 px-4 py-4 sm:px-8 sm:py-5">
+    <header className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-border bg-linear-to-b from-card to-card/75 px-4 py-4 text-card-foreground sm:px-8 sm:py-5">
       {showBack && (
         <button
           aria-label="Back"
@@ -36,21 +34,23 @@ export default function Header({ showBack = true }: { showBack?: boolean }) {
           <span className="hidden sm:inline">Back</span>
         </button>
       )}
-      <h1 className="col-start-2 text-center text-sm font-bold tracking-[0.12em] text-stone-100 uppercase sm:text-xl sm:tracking-[0.18em]">
+      <h1 className="col-start-2 text-center text-sm font-bold tracking-[0.12em] uppercase sm:text-xl sm:tracking-[0.18em]">
         DBD Streak Helper
       </h1>
-      <button
-        aria-label={
-          darkTheme ? "Switch to light theme" : "Switch to dark theme"
-        }
-        onClick={handleToggleTheme}
-        className={cn(
-          lobbyButton,
-          "w-11 justify-self-end cursor-pointer text-base",
-        )}
-      >
-        {darkTheme ? <IoSunnyOutline /> : <FaMoon />}
-      </button>
+      {isLocal && (
+        <button
+          aria-label={
+            darkTheme ? "Switch to light theme" : "Switch to dark theme"
+          }
+          onClick={() => setDarkTheme(toggleTheme())}
+          className={cn(
+            lobbyButton,
+            "w-11 justify-self-end cursor-pointer text-base",
+          )}
+        >
+          {darkTheme ? <IoSunnyOutline /> : <FaMoon />}
+        </button>
+      )}
     </header>
   );
 }
