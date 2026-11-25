@@ -60,6 +60,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_callOfBrine.png/96px-IconPerks_callOfBrine.png"
   },
   {
+    "name": "Celestial Witness",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_CelestialWitness.png/96px-T_UI_iconsPerks_CelestialWitness.png"
+  },
+  {
     "name": "Corrupt Intervention",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_corruptIntervention.png/96px-IconPerks_corruptIntervention.png"
   },
@@ -162,6 +166,10 @@
   {
     "name": "Friends 'til the End",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_friendsTilTheEnd.png/96px-IconPerks_friendsTilTheEnd.png"
+  },
+  {
+    "name": "Funny Business",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_FunnyBusiness.png/96px-T_UI_iconsPerks_FunnyBusiness.png"
   },
   {
     "name": "Furtive Chase",
@@ -268,6 +276,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_hexTwoCanPlay.png/96px-IconPerks_hexTwoCanPlay.png"
   },
   {
+    "name": "Hex: Under Your Thumb",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_HexUnderYourThumb.png/96px-T_UI_iconsPerks_HexUnderYourThumb.png"
+  },
+  {
     "name": "Hex: Undying",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_hexUndying.png/96px-IconPerks_hexUndying.png"
   },
@@ -316,12 +328,24 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_saveTheBestForLast_noLicense.png/96px-IconPerks_saveTheBestForLast_noLicense.png"
   },
   {
+    "name": "Kill Spree",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_KillSpree.png/96px-T_UI_iconsPerks_KillSpree.png"
+  },
+  {
     "name": "Knock Out",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_knockOut.png/96px-IconPerks_knockOut.png"
   },
   {
     "name": "Languid Touch",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_languidTouch.png/96px-IconPerks_languidTouch.png"
+  },
+  {
+    "name": "Laughingstock",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_Laughingstock.png/96px-T_UI_iconsPerks_Laughingstock.png"
+  },
+  {
+    "name": "Lay Waste",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_LayWaste.png/96px-T_UI_iconsPerks_LayWaste.png"
   },
   {
     "name": "Lethal Pursuer",

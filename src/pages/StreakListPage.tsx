@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Game, Streak } from "@/lib/customTypes";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import PageWrapper from "./PageWrapper";
 
 const StreakListPage: React.FC = () => {
   const [streaks, setStreaks] = useState<Streak[]>([exampleStreak]);
@@ -28,50 +29,52 @@ const StreakListPage: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">My Streaks</h1>
-      <div className="mb-4">
+    <PageWrapper>
+      <div className="w-full">
+        <h2 className="text-3xl font-bold mb-4">My Streaks</h2>
+        <div className="">
+          <Link
+            to="./new"
+            className="inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 box-border"
+          >
+            Start a New Streak
+          </Link>
+        </div>
+        {streaks.length === 0 ? (
+          <p>No streaks found. Start a new streak to begin!</p>
+        ) : (
+          <ul className="space-y-4 my-4">
+            {streaks.map((streak) => (
+              <li
+                key={streak.id}
+                className="border p-4 rounded bg-accent hover:bg-accent/70 transition-colors"
+              >
+                <Link to={`./${streak.id}`}>
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h2 className="text-xl font-semibold">{streak.title}</h2>
+                      <p>
+                        Successful Games: {successfulGamesCount(streak.games)}
+                      </p>
+                    </div>
+                    <div className="text-blue-600 font-medium">
+                      View Details &rarr;
+                    </div>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+        <Button onClick={() => saveStreaks()}>Save Streaks</Button>
         <Link
-          to="./new"
+          to="./hardcore/"
           className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
         >
-          Start a New Streak
+          Hardcore Page
         </Link>
       </div>
-      {streaks.length === 0 ? (
-        <p>No streaks found. Start a new streak to begin!</p>
-      ) : (
-        <ul className="space-y-4">
-          {streaks.map((streak) => (
-            <li
-              key={streak.id}
-              className="border p-4 rounded hover:bg-gray-100 transition-colors"
-            >
-              <Link to={`./streak/${streak.id}`}>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h2 className="text-xl font-semibold">{streak.title}</h2>
-                    <p>
-                      Successful Games: {successfulGamesCount(streak.games)}
-                    </p>
-                  </div>
-                  <div className="text-blue-600 font-medium">
-                    View Details &rarr;
-                  </div>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      <Button onClick={() => saveStreaks()}>Save Streaks</Button>
-      <Link
-        to="./hardcore/"
-        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-      >
-        Hardcore Page
-      </Link>
-    </div>
+    </PageWrapper>
   );
 };
 

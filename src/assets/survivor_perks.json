@@ -56,6 +56,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_bardicInspiration.png/96px-IconPerks_bardicInspiration.png"
   },
   {
+    "name": "Best Gift Ever",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_BestGiftEver.png/96px-T_UI_iconsPerks_BestGiftEver.png"
+  },
+  {
     "name": "Better Together",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_betterTogether.png/96px-IconPerks_betterTogether.png"
   },
@@ -106,6 +110,10 @@
   {
     "name": "Boon: Shadow Step",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_boonShadowStep.png/96px-IconPerks_boonShadowStep.png"
+  },
+  {
+    "name": "Boon: Steadfast",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_BoonSteadfast.png/96px-T_UI_iconsPerks_BoonSteadfast.png"
   },
   {
     "name": "Borrowed Time",
@@ -310,6 +318,10 @@
   {
     "name": "Friendly Competition",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_friendlyCompetition.png/96px-IconPerks_friendlyCompetition.png"
+  },
+  {
+    "name": "Fruits of Your Labor",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_FruitsOfYourLabor.png/96px-T_UI_iconsPerks_FruitsOfYourLabor.png"
   },
   {
     "name": "Ghost Notes",
@@ -532,6 +544,10 @@
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_saboteur.png/96px-IconPerks_saboteur.png"
   },
   {
+    "name": "Salvation's Cry",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_SalvationsCry.png/96px-T_UI_iconsPerks_SalvationsCry.png"
+  },
+  {
     "name": "Scavenger",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_scavenger.png/96px-IconPerks_scavenger.png"
   },
@@ -550,6 +566,10 @@
   {
     "name": "Self-Preservation",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_self-Preservation.png/96px-IconPerks_self-Preservation.png"
+  },
+  {
+    "name": "Shared Trauma",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_SharedTrauma.png/96px-T_UI_iconsPerks_SharedTrauma.png"
   },
   {
     "name": "Shoulder the Burden",
@@ -658,6 +678,10 @@
   {
     "name": "Urban Evasion",
     "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/IconPerks_urbanEvasion.png/96px-IconPerks_urbanEvasion.png"
+  },
+  {
+    "name": "Valkyrie's Rage",
+    "iconUrl": "https://deadbydaylight.wiki.gg/images/thumb/T_UI_iconsPerks_ValkyriesRage.png/96px-T_UI_iconsPerks_ValkyriesRage.png"
   },
   {
     "name": "Vigil",
