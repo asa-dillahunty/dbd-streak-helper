@@ -32,6 +32,19 @@ const getDefaultOptions = () => ({
   showText: true,
 });
 
+function getWinner(
+  items: PrizeItem[],
+  angle: number,
+  arrowAngle: number,
+): PrizeItem | undefined {
+  if (items.length === 0) return undefined;
+  const effectiveAngle = angle % 360;
+  const relativeAngle = (arrowAngle - effectiveAngle + 360) % 360;
+  const sliceAngle = 360 / items.length;
+  const prizeIndex = Math.floor(relativeAngle / sliceAngle) % items.length;
+  return items[prizeIndex];
+}
+
 export default function PrizeWheel({
   items,
   setResult,
@@ -39,14 +52,23 @@ export default function PrizeWheel({
 }: PrizeWheelProps) {
   const options = useMemo(
     () => Object.assign(getDefaultOptions(), userOptions),
-    [userOptions]
+    [userOptions],
   );
 
   const [spinning, setSpinning] = useState(false);
   const controls = useAnimationControls();
   const [angle, setAngle] = useState(0);
-  const spinTimeout = useRef<NodeJS.Timeout | null>(null);
-  const [chosenItem, setChosenItem] = useState(items[0]);
+  const spinTimeout = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const publishedWinner = useRef<PrizeItem | undefined>(undefined);
+
+  const arrowAngle = options.orientation === "right" ? 0 : 270;
+  const chosenItem = getWinner(items, angle, arrowAngle);
+
+  useEffect(() => {
+    if (chosenItem === publishedWinner.current) return;
+    publishedWinner.current = chosenItem;
+    if (chosenItem) setResult(chosenItem);
+  }, [chosenItem, setResult]);
 
   const wheelSize = options.size; // wheel width/height in px, default 700
   const spinDuration = 8; // in seconds
@@ -65,7 +87,7 @@ export default function PrizeWheel({
     const requestedSize = Math.floor(
       wheelSize /
         2 /
-        (1 / (2 * Math.sin((sliceAngle * (Math.PI / 180)) / 2)) + 1)
+        (1 / (2 * Math.sin((sliceAngle * (Math.PI / 180)) / 2)) + 1),
     );
 
     return requestedSize < maxSize ? requestedSize : maxSize;
@@ -88,7 +110,6 @@ export default function PrizeWheel({
       }
       return;
     }
-    setSpinning(true);
     const randomTurns = Math.floor(Math.random() * 4) + 8; // between 8-11 spins
     const randomStop = Math.random() * 360;
     const extraRotation = 360 * randomTurns + randomStop;
@@ -102,6 +123,10 @@ export default function PrizeWheel({
       newAngle -= angleBuffer;
     }
 
+    const winner = getWinner(items, newAngle, arrowAngle);
+    if (!winner) return;
+
+    setSpinning(true);
     controls.start({
       rotate: newAngle,
       transition: {
@@ -114,20 +139,10 @@ export default function PrizeWheel({
       setSpinning(false);
     }, spinDuration * 1010);
 
+    publishedWinner.current = winner;
     setAngle(newAngle);
+    setResult(winner);
   };
-
-  useEffect(() => {
-    const effectiveAngle = angle % 360;
-
-    let arrowAngle = 270; // orientation is top by default
-    if (options.orientation === "right") arrowAngle = 0;
-
-    const relativeAngle = (arrowAngle - effectiveAngle + 360) % 360;
-    const prizeIndex = Math.floor(relativeAngle / sliceAngle) % items.length;
-    setChosenItem(items[prizeIndex]);
-    setResult(items[prizeIndex]); // can angle technically be zero with a spin cancel? No, zero is too close to a mid angle, right?
-  }, [angle, items]);
 
   return (
     <div className="flex flex-col items-center gap-4 relative w-min">
@@ -154,12 +169,13 @@ export default function PrizeWheel({
 
       <Button
         onClick={spinWheel}
+        disabled={items.length === 0}
         className="rounded-full absolute top-1/2 left-1/2 -translate-1/2 w-[16ch] h-[16ch] hover:opacity-100 whitespace-break-spaces"
         variant={"outline"}
       >
         {spinning
           ? "Spinning..."
-          : angle === 0
+          : angle === 0 || !chosenItem
             ? "Spin the Wheel"
             : chosenItem.name}
       </Button>

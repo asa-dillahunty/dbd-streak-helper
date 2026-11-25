@@ -14,7 +14,7 @@ export default function LootBoxSelector({ items }: LootBoxSelectorProps) {
   const spinDuration = 5; // spin duration in seconds
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
 
   const [containerCenter, setContainerCenter] = useState(0);
   const [visibleBufferCycles, setVisibleBufferCycles] = useState(0);
@@ -22,7 +22,7 @@ export default function LootBoxSelector({ items }: LootBoxSelectorProps) {
 
   const getOffsetOfIndex = (
     index: number,
-    containerCenterOverride?: number
+    containerCenterOverride?: number,
   ) => {
     const itemCenter = index * totalCardWidth + cardWidth / 2;
     if (containerCenterOverride) return containerCenterOverride - itemCenter;
@@ -47,7 +47,7 @@ export default function LootBoxSelector({ items }: LootBoxSelectorProps) {
     if (containerRef.current) {
       const cc = containerRef.current.offsetWidth / 2;
       const vbc = Math.ceil(
-        containerRef.current.offsetWidth / totalCardWidth / items.length
+        containerRef.current.offsetWidth / totalCardWidth / items.length,
       );
       const ii = vbc * items.length;
 
@@ -99,7 +99,7 @@ export default function LootBoxSelector({ items }: LootBoxSelectorProps) {
     setSelectedNoise(randomNoise);
     timeoutRef.current = setTimeout(
       () => finishSpin(randomIndex, randomNoise),
-      spinDuration * 1000
+      spinDuration * 1000,
     );
   };
 
@@ -118,7 +118,7 @@ export default function LootBoxSelector({ items }: LootBoxSelectorProps) {
           {repeatedItems.map((item, index) => (
             <div
               key={index}
-              className="flex-shrink-0 bg-slate-700 rounded-lg"
+              className="shrink-0 bg-slate-700 rounded-lg"
               style={{ width: `${cardWidth}px`, height: `${cardWidth}px` }}
             >
               <img
