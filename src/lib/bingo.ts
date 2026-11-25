@@ -1,3 +1,5 @@
+import type { PlayerColor } from "./playerColors";
+
 export interface BingoPrompt {
   id: string;
   text: string;
@@ -6,6 +8,8 @@ export interface BingoPrompt {
 interface Completion {
   playerId: string;
   playerName: string;
+  iconURL?: string;
+  color?: PlayerColor;
 }
 
 export interface BingoBoardState {

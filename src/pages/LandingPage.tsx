@@ -23,7 +23,7 @@ export default function LandingPage() {
   return (
     <div className="relative isolate min-h-dvh text-white">
       <LobbyBackground />
-      <PageWrapper>
+      <PageWrapper showBack={false}>
         <nav
           aria-label="Main menu"
           className="mt-8 grid w-full max-w-xs gap-2 sm:mt-[clamp(3rem,12vh,9rem)] sm:ml-6 sm:self-start"

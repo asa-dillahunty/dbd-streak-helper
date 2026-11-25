@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Check, Shuffle, Sparkles } from "lucide-react";
+import { Shuffle, Sparkles } from "lucide-react";
 import campfire from "@/assets/dbd-lobby-campfire.jpg";
 import { OBSESSION_URL } from "@/assets/gameData";
 import BingoListEditor from "@/components/BingoListEditor";
 import PageWrapper from "@/components/PageWrapper";
+import PlayerAvatar from "@/components/PlayerAvatar";
 import PlayerPicker, { type PlayerOption } from "@/components/PlayerPicker";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,18 +16,31 @@ import {
   updatePromptPool,
 } from "@/lib/bingo";
 import usePersistedState from "@/lib/usePersistedState";
+import { defaultPlayerColor, playerColors } from "@/lib/playerColors";
 import { cn } from "@/lib/utils";
 
-const genericPlayer = { id: "generic", name: "Generic" };
+const genericPlayer: PlayerOption = { id: "generic", name: "Generic" };
 const defaultPlayers: PlayerOption[] = [
-  { id: "stantley", name: "stantley" },
-  { id: "terracottapot17", name: "terracottapot17" },
+  {
+    id: "stantley",
+    name: "stantley",
+    iconURL:
+      "https://avatars.akamai.steamstatic.com/3b8cb1147355991b99ded67f6d8631efece64d53_full.jpg",
+    color: "Blue",
+  },
+  {
+    id: "terracottapot17",
+    name: "terracottapot17",
+    iconURL:
+      "https://avatars.akamai.steamstatic.com/ca744c812b0a990376ab314e8f38ea8c6481d3c8_full.jpg",
+    color: "Amber",
+  },
 ];
 
 const controlClass =
   "min-h-11 rounded-sm border-stone-600 bg-stone-950 text-stone-100 hover:bg-stone-800 hover:text-white focus-visible:ring-red-300";
 const tileClass =
-  "flex h-full min-h-24 min-w-0 flex-col items-center justify-center gap-1.5 border px-0.5 py-2 text-center text-sm leading-tight [overflow-wrap:anywhere] sm:min-h-28 sm:px-2";
+  "flex h-full min-h-24 min-w-0 flex-col items-center justify-center gap-1.5 border px-0.5 py-2 text-center text-xs leading-tight [overflow-wrap:anywhere] sm:min-h-28 sm:px-2 sm:text-sm";
 
 export default function BingoPage() {
   const [board, setBoard] = usePersistedState(
@@ -40,8 +54,17 @@ export default function BingoPage() {
   const [selectedPlayerId, setSelectedPlayerId] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
 
+  const players = roster.map((player, index) => ({
+    ...player,
+    iconURL:
+      player.iconURL ??
+      defaultPlayers.find(({ id }) => id === player.id)?.iconURL,
+    color: player.color ?? defaultPlayerColor(index),
+  }));
+  const playersById = new Map(players.map((player) => [player.id, player]));
   const activePlayer =
-    roster.find(({ id }) => id === selectedPlayerId) ?? genericPlayer;
+    (selectedPlayerId ? playersById.get(selectedPlayerId) : undefined) ??
+    genericPlayer;
   const prompts = new Map(
     getPrompts(board.customPrompts).map(({ id, text }) => [id, text]),
   );
@@ -136,7 +159,7 @@ export default function BingoPage() {
                 Players
               </h3>
               <PlayerPicker
-                players={roster}
+                players={players}
                 selectedPlayerId={selectedPlayerId}
                 onSelect={(id) =>
                   setSelectedPlayerId((current) => (current === id ? null : id))
@@ -147,11 +170,22 @@ export default function BingoPage() {
                   title="Edit players"
                   description="Existing marks keep the name recorded when the square was completed."
                   entryLabel="Player"
-                  entries={roster.map(({ id, name }) => ({ id, text: name }))}
+                  showPlayerAppearance
+                  entries={players.map(({ id, name, iconURL, color }) => ({
+                    id,
+                    text: name,
+                    iconURL,
+                    color,
+                  }))}
                   triggerClassName="min-h-11 rounded-sm border-transparent bg-transparent px-2 font-normal text-stone-400 shadow-none hover:bg-stone-900 hover:text-stone-100 focus-visible:ring-red-300"
                   onSave={(entries) => {
                     setRoster(
-                      entries.map(({ id, text }) => ({ id, name: text })),
+                      entries.map(({ id, text, iconURL, color }) => ({
+                        id,
+                        name: text,
+                        iconURL,
+                        color,
+                      })),
                     );
                     if (!entries.some(({ id }) => id === selectedPlayerId)) {
                       setSelectedPlayerId(null);
@@ -186,6 +220,13 @@ export default function BingoPage() {
                 }
 
                 const completion = board.completions[id];
+                const namedCompletion =
+                  completion?.playerId !== genericPlayer.id
+                    ? completion
+                    : undefined;
+                const owner =
+                  namedCompletion && playersById.get(namedCompletion.playerId);
+                const color = owner ? owner.color : namedCompletion?.color;
                 return (
                   <li key={id} className="min-w-0">
                     <button
@@ -196,6 +237,8 @@ export default function BingoPage() {
                           toggleCompletion(current, id, {
                             playerId: activePlayer.id,
                             playerName: activePlayer.name,
+                            iconURL: activePlayer.iconURL,
+                            color: activePlayer.color,
                           }),
                         )
                       }
@@ -206,6 +249,14 @@ export default function BingoPage() {
                           ? "border-red-500 bg-red-950 text-red-50 hover:bg-red-900"
                           : "border-stone-700 bg-stone-900 text-stone-100 hover:border-stone-400 hover:bg-stone-800",
                       )}
+                      style={
+                        color
+                          ? {
+                              borderColor: playerColors[color],
+                              backgroundColor: `color-mix(in srgb, ${playerColors[color]} 30%, var(--color-stone-950))`,
+                            }
+                          : undefined
+                      }
                     >
                       <img
                         src={OBSESSION_URL}
@@ -213,19 +264,20 @@ export default function BingoPage() {
                         className="pointer-events-none absolute inset-0 -z-10 h-full w-full scale-150 object-contain opacity-0 group-hover:opacity-40 group-focus-visible:opacity-40 motion-safe:transition-opacity"
                       />
                       <span className="w-full">{prompts.get(id)}</span>
-                      {completion && (
-                        <span className="flex w-full flex-wrap items-center justify-center gap-x-1 text-xs font-medium text-red-200">
-                          <Check
-                            aria-hidden="true"
-                            className="size-3 shrink-0"
+                      {namedCompletion && (
+                        <>
+                          <span className="sr-only">
+                            Completed by {namedCompletion.playerName}
+                          </span>
+                          <PlayerAvatar
+                            name={namedCompletion.playerName}
+                            iconURL={
+                              owner ? owner.iconURL : namedCompletion.iconURL
+                            }
+                            color={color}
+                            className="absolute right-1 bottom-1 size-7 sm:size-8"
                           />
-                          {completion.playerId !== genericPlayer.id && (
-                            <span className="min-w-0">
-                              <span className="sr-only">Completed by </span>
-                              {completion.playerName}
-                            </span>
-                          )}
-                        </span>
+                        </>
                       )}
                     </button>
                   </li>

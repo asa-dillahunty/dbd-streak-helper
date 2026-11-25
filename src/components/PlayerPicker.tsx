@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
+import PlayerAvatar from "@/components/PlayerAvatar";
+import type { PlayerColor } from "@/lib/playerColors";
 import { cn } from "@/lib/utils";
 
 export interface PlayerOption {
   id: string;
   name: string;
   iconURL?: string;
+  color?: PlayerColor;
 }
 
 interface PlayerPickerProps {
@@ -24,7 +27,7 @@ export default function PlayerPicker({
       aria-label="Active player"
       className="flex flex-wrap gap-2"
     >
-      {players.map(({ id, name, iconURL }) => (
+      {players.map(({ id, name, iconURL, color }) => (
         <Button
           key={id}
           type="button"
@@ -37,12 +40,8 @@ export default function PlayerPicker({
               "border-red-400 bg-red-950 text-red-100 hover:bg-red-900",
           )}
         >
-          {iconURL && (
-            <img
-              src={iconURL}
-              alt=""
-              className="size-6 rounded-sm object-cover"
-            />
+          {(iconURL || color) && (
+            <PlayerAvatar name={name} iconURL={iconURL} color={color} />
           )}
           <span className="min-w-0 [overflow-wrap:anywhere]">{name}</span>
         </Button>

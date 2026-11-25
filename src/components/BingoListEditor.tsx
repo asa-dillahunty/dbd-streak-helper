@@ -10,14 +10,33 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { normalizeText, type BingoPrompt } from "@/lib/bingo";
+import {
+  defaultPlayerColor,
+  playerColorOptions,
+  type PlayerColor,
+} from "@/lib/playerColors";
+
+interface ListEntry extends BingoPrompt {
+  iconURL?: string;
+  color?: PlayerColor;
+}
 
 interface BingoListEditorProps {
   title: string;
   description: string;
   entryLabel: string;
-  entries: BingoPrompt[];
-  onSave: (entries: BingoPrompt[]) => void;
+  entries: ListEntry[];
+  onSave: (entries: ListEntry[]) => void;
+  showPlayerAppearance?: boolean;
   triggerClassName?: string;
+}
+
+function isHttpsUrl(value: string): boolean {
+  try {
+    return new URL(value).protocol === "https:";
+  } catch {
+    return false;
+  }
 }
 
 export default function BingoListEditor({
@@ -27,11 +46,12 @@ export default function BingoListEditor({
   entries,
   onSave,
   triggerClassName,
+  showPlayerAppearance = false,
 }: BingoListEditorProps) {
   const formId = useId();
   const nextFocus = useRef<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [draft, setDraft] = useState<BingoPrompt[]>([]);
+  const [draft, setDraft] = useState<ListEntry[]>([]);
   const [error, setError] = useState("");
 
   function changeOpen(isOpen: boolean) {
@@ -45,12 +65,37 @@ export default function BingoListEditor({
   function addEntry() {
     const id = crypto.randomUUID();
     nextFocus.current = id;
-    setDraft((current) => [...current, { id, text: "" }]);
+    setDraft((current) => [
+      ...current,
+      {
+        id,
+        text: "",
+        ...(showPlayerAppearance && {
+          color:
+            playerColorOptions.find(
+              (color) => !current.some((entry) => entry.color === color),
+            ) ?? defaultPlayerColor(current.length),
+        }),
+      },
+    ]);
+  }
+
+  function updateEntry(id: string, changes: Partial<ListEntry>) {
+    setDraft((current) =>
+      current.map((entry) =>
+        entry.id === id ? { ...entry, ...changes } : entry,
+      ),
+    );
+    setError("");
   }
 
   function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const cleaned = draft.map(({ id, text }) => ({ id, text: text.trim() }));
+    const cleaned = draft.map(({ id, text, iconURL, color }) => ({
+      id,
+      text: text.trim(),
+      ...(showPlayerAppearance && { iconURL: iconURL?.trim() ?? "", color }),
+    }));
     const names = cleaned.map(({ text }) => normalizeText(text));
     if (names.includes("")) {
       setError(`Enter text for each ${entryLabel.toLowerCase()}.`);
@@ -59,6 +104,12 @@ export default function BingoListEditor({
     if (new Set(names).size !== names.length) {
       setError(`Use a different name for each ${entryLabel.toLowerCase()}.`);
       return;
+    }
+    for (const { iconURL, text } of cleaned) {
+      if (iconURL && !isHttpsUrl(iconURL)) {
+        setError(`Enter an HTTPS avatar image URL for ${text}.`);
+        return;
+      }
     }
     onSave(cleaned);
     setOpen(false);
@@ -81,7 +132,7 @@ export default function BingoListEditor({
         <form onSubmit={save} className="grid gap-4">
           {draft.length > 0 && (
             <ul className="grid gap-2">
-              {draft.map(({ id, text }, index) => (
+              {draft.map(({ id, text, iconURL, color }, index) => (
                 <li
                   key={id}
                   className="flex flex-wrap items-end gap-2 sm:flex-nowrap"
@@ -103,17 +154,51 @@ export default function BingoListEditor({
                       }}
                       type="text"
                       value={text}
-                      onChange={(event) => {
-                        const value = event.target.value;
-                        setDraft((current) =>
-                          current.map((entry) =>
-                            entry.id === id ? { id, text: value } : entry,
-                          ),
-                        );
-                        setError("");
-                      }}
+                      onChange={(event) =>
+                        updateEntry(id, { text: event.target.value })
+                      }
                       className="min-h-11 min-w-0 rounded-sm border border-stone-600 bg-stone-900 px-3 text-base focus-visible:outline-2 focus-visible:outline-red-300"
                     />
+                    {showPlayerAppearance && (
+                      <>
+                        <label
+                          htmlFor={`${formId}-${id}-avatar`}
+                          className="mt-1 text-sm text-stone-300"
+                        >
+                          Steam avatar image URL (optional)
+                        </label>
+                        <input
+                          id={`${formId}-${id}-avatar`}
+                          type="text"
+                          inputMode="url"
+                          value={iconURL ?? ""}
+                          onChange={(event) =>
+                            updateEntry(id, { iconURL: event.target.value })
+                          }
+                          className="min-h-11 min-w-0 rounded-sm border border-stone-600 bg-stone-900 px-3 text-base focus-visible:outline-2 focus-visible:outline-red-300"
+                        />
+                        <label
+                          htmlFor={`${formId}-${id}-color`}
+                          className="mt-1 text-sm text-stone-300"
+                        >
+                          Color for player {index + 1}
+                        </label>
+                        <select
+                          id={`${formId}-${id}-color`}
+                          value={color ?? defaultPlayerColor(index)}
+                          onChange={(event) =>
+                            updateEntry(id, {
+                              color: event.target.value as PlayerColor,
+                            })
+                          }
+                          className="min-h-11 min-w-0 rounded-sm border border-stone-600 bg-stone-900 px-3 text-base focus-visible:outline-2 focus-visible:outline-red-300"
+                        >
+                          {playerColorOptions.map((option) => (
+                            <option key={option}>{option}</option>
+                          ))}
+                        </select>
+                      </>
+                    )}
                   </div>
                   <Button
                     type="button"
